@@ -36,11 +36,8 @@ class Admin extends Common
 
     //添加账号
     public function admin_add(){
-
         $accounts = $_POST['accounts'];
         $password = $_POST['password'];
-
-
         if(empty($accounts)){
             echo 0;
         }else if(empty($password)){
