@@ -24,4 +24,14 @@ class Login{
 			echo 2;
 		}
 	}
+	public function go_out(){
+		Session::delete("accounts");
+		$res = Session::delete("admin_id");
+		if($res==null){
+			echo '<script>alert("已退出");location.href="Login/login"</script>';
+		}else{
+			echo '<script>alert("已退出");location.href="Login/login"</script>';
+		}
+		
+	}
 }

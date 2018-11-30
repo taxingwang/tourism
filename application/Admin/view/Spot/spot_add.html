@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>头部-有点</title>
+<base href="http://www.tours.com/admin/">
+<link rel="stylesheet" type="text/css" href="css/css.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<div id="pageAll">
+		<div class="pageTop">
+			<div class="page">
+				<img src="img/coin02.png" /><span><a href="Index/index" target="_top">首页</a>&nbsp;-&nbsp;<a
+					href="#">景点路线管理</a>&nbsp;-</span>&nbsp;景点添加
+			</div>
+		</div>
+		<div class="page ">
+			<!-- 上传广告页面样式 -->
+			<div class="banneradd bor">
+				<div class="baTop">
+					<span>上传广告</span>
+				</div>
+				<div class="baBody">
+					<div class="bbD">
+						景点名称：<input type="text" class="input1" />
+					</div>
+					<div class="bbD">
+						景点分类：<select name="spot_type_id" id="">
+							<?php foreach ($type as $key => $value) {?>
+								<option value="<?php echo $value['class_id'] ?>"><?php echo $value['class_name'] ?></option>
+							<?php } ?>
+						</select>
+					</div>
+					<div class="bbD">
+						所在地区：<select name="areas" id="area">
+							<?php foreach ($areas as $key => $val) {?>
+								<option value="<?php echo $val['area_id'] ?>"><?php echo $val['area_name'] ?></option>
+							<?php } ?>
+						</select>
+					</div>
+					<script>
+					$(document).on("change","#area",function(){
+						var parent_id = $("#area").val();
+						$("#area").nextAll().remove()
+						$.ajax({
+							data:{'parent_id':parent_id},
+							url:"{:Url('Spot/get_area')}",
+							type:"post",
+							dataType:"json",
+							success:function(msg){
+								data = eval(msg)
+								var select = "<select name='area' id='areas'>";
+								for(var i=0;i<data.length;i++){
+									select+="<option value="+data[i]['area_id']+">"+data[i]['area_name']+"</option>";
+								}
+								select += "</select>"
+								$("#area").after(select)
+							}
+						})
+					})
+					$(document).on("change","#areas",function(){
+						var parent_id = $("#areas").val();
+						$("#areas").nextAll().remove()
+						$.ajax({
+							data:{'parent_id':parent_id},
+							url:"{:Url('Spot/get_area')}",
+							type:"post",
+							dataType:"json",
+							success:function(msg){
+								data = eval(msg)
+								var select = "<select name='area' id='areass'>";
+								for(var i=0;i<data.length;i++){
+									select+="<option value="+data[i]['area_id']+">"+data[i]['area_name']+"</option>";
+								}
+								select += "</select>"
+								$("#areas").after(select)
+							}
+						})
+					})
+					</script>
+					<div class="bbD">
+						景点简介：<input type="text" name="spot_desc" class="input1"/>
+					</div>
+					<div class="bbD">
+						详细介绍：<textarea name="spot_message" id="" cols="30" rows="10" class="input1"></textarea>
+					</div>
+					<div class="bbD">
+						景点图片：
+						<div class="bbDd">
+							<div class="bbDImg">+</div>
+							<input type="file" class="file" /> <a class="bbDDel" href="#">删除</a>
+						</div>
+					</div>
+					<div class="bbD">
+						是否开放：<label><input type="radio" checked="checked" />是</label> <label><input
+							type="radio" />否</label>
+					</div>
+					<div class="bbD">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;排序：<input class="input2"
+							type="text" />
+					</div>
+					<div class="bbD">
+						<p class="bbDP">
+							<button class="btn_ok btn_yes" href="#">提交</button>
+							<a class="btn_ok btn_no" href="#">取消</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- 上传广告页面样式end -->
+		</div>
+	</div>
+</body>
+</html>

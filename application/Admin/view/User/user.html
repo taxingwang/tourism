@@ -35,7 +35,7 @@
 			if(confirm("确定添加"+u_name+"用户？")){
 				$.ajax({
 				data:{'u_name':u_name,'u_password':u_password},
-				url:"{:U('Login/register_do')}",
+				url:"{:Url('Login/register_do')}",
 				type:"post",
 				success:function(msg){
 					if(msg==1){
