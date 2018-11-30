@@ -14,8 +14,8 @@ class Login{
 		if($arr){
 			if($arr['admin_pwd']==$admin_pwd){
 				$res = Db::table('admin')->where('admin_id',$arr['admin_id'])->update(['last_time'=>date("Y-m-d H:i:s")]);
-				Session::set("accounts",'$arr["accounts"]');
-				Session::set("admin_id",'$arr["admin_id"]');
+				Session::set("accounts",$arr["accounts"]);
+				Session::set("admin_id",$arr["admin_id"]);
 				echo 1;
 			}else{
 				echo 3;
