@@ -12,6 +12,15 @@ class Spot extends Common
 		$this->assign("type",$type);
 		return view();
 	}
+	public function spot_add_do(){
+		$data = $_POST;
+		$res = Db::table("spot")->insert($data);
+		if($res){
+			echo 1;
+		}else{
+			echo 2;
+		}
+	}
 	public function get_area(){
 		$parent_id = $_POST['parent_id'];
 		$data = Db::table("areas")->where("parent_id",$parent_id)->select();

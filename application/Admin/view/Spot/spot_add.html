@@ -19,11 +19,11 @@
 			<!-- 上传广告页面样式 -->
 			<div class="banneradd bor">
 				<div class="baTop">
-					<span>上传广告</span>
+					<span>添加景点</span>
 				</div>
 				<div class="baBody">
 					<div class="bbD">
-						景点名称：<input type="text" class="input1" />
+						景点名称：<input type="text" class="input1" name="spot_name"/>
 					</div>
 					<div class="bbD">
 						景点分类：<select name="spot_type_id" id="">
@@ -33,7 +33,8 @@
 						</select>
 					</div>
 					<div class="bbD">
-						所在地区：<select name="areas" id="area">
+						所在地区：<select name="area" id="area">
+						<option value="">请选择...</option>
 							<?php foreach ($areas as $key => $val) {?>
 								<option value="<?php echo $val['area_id'] ?>"><?php echo $val['area_name'] ?></option>
 							<?php } ?>
@@ -50,7 +51,7 @@
 							dataType:"json",
 							success:function(msg){
 								data = eval(msg)
-								var select = "<select name='area' id='areas'>";
+								var select = "<select name='areas' id='areas'><option value=''>请选择...</option>";
 								for(var i=0;i<data.length;i++){
 									select+="<option value="+data[i]['area_id']+">"+data[i]['area_name']+"</option>";
 								}
@@ -69,7 +70,7 @@
 							dataType:"json",
 							success:function(msg){
 								data = eval(msg)
-								var select = "<select name='area' id='areass'>";
+								var select = "<select name='areass' id='areass'><option value=''>请选择...</option>";
 								for(var i=0;i<data.length;i++){
 									select+="<option value="+data[i]['area_id']+">"+data[i]['area_name']+"</option>";
 								}
@@ -85,24 +86,20 @@
 					<div class="bbD">
 						详细介绍：<textarea name="spot_message" id="" cols="30" rows="10" class="input1"></textarea>
 					</div>
-					<div class="bbD">
+					<!-- <div class="bbD">
 						景点图片：
 						<div class="bbDd">
 							<div class="bbDImg">+</div>
-							<input type="file" class="file" /> <a class="bbDDel" href="#">删除</a>
+							<input type="file" class="file" name="img" /> <a class="bbDDel" href="#">删除</a>
 						</div>
-					</div>
+					</div> -->
 					<div class="bbD">
-						是否开放：<label><input type="radio" checked="checked" />是</label> <label><input
-							type="radio" />否</label>
+						是否开放：<label><input type="radio" name="spot_status" value="1" checked/>是</label> <label><input type="radio" name="spot_status" value="0" />否</label>
 					</div>
-					<div class="bbD">
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;排序：<input class="input2"
-							type="text" />
-					</div>
+					
 					<div class="bbD">
 						<p class="bbDP">
-							<button class="btn_ok btn_yes" href="#">提交</button>
+							<button class="btn_ok btn_yes" href="#" id="submit">提交</button>
 							<a class="btn_ok btn_no" href="#">取消</a>
 						</p>
 					</div>
@@ -114,3 +111,39 @@
 	</div>
 </body>
 </html>
+<script>
+	$(document).on("click","#submit",function(){
+		var spot_name = $("input[name=spot_name]").val()//景点名称
+		var spot_type_id = $("select[name=spot_type_id]").val()//景点分类
+		var area = $("select[name=area]").val()
+		var areas = $("select[name=areas]").val()
+		var areass = $("select[name=areass]").val()
+		var spot_desc = $("input[name=spot_desc]").val()//景点简介
+		var spot_message = $("textarea[name=spot_message]").val()//景点详情
+		var spot_status = $("input[name=spot_status]:checked").val()//状态
+		if(area==""){
+			alert("请选择地区")
+			return false;
+		}
+		if(!areass==""){
+			area_id = areass
+		}else if(!areas==""){
+			area_id = areas
+		}else{
+			area_id = area
+		}
+		$.ajax({
+			data:{"spot_name":spot_name,"spot_type_id":spot_type_id,"area_id":area_id,"spot_desc":spot_desc,"spot_message":spot_message,"spot_status":spot_status},
+			type:"post",
+			url:"{:Url('Spot/spot_add_do')}",
+			success:function(msg){
+				if(msg==1){
+					alert("添加成功")
+					window.location.href="{:Url('Spot/spot_add')}"
+				}else{
+					alert("出错啦")
+				}
+			}
+		})
+	})
+</script>

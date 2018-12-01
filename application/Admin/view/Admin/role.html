@@ -1,10 +1,120 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>角色管理-有点</title>
+	<base href="http://www.tours.com/admin/">
+<link rel="stylesheet" type="text/css" href="css/css.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="js/page.js" ></script> -->
 </head>
+
 <body>
-	角色管理
+<div id="pageAll">
+<div class="pageTop">
+	<div class="page">
+		<img src="img/coin02.png" /><span><a href="{:url('index/main')}">首页</a>&nbsp;-&nbsp;-</span>&nbsp;后台人事管理&nbsp;-&nbsp;-角色管理
+	</div>
+</div>
+
+<div class="page">
+	<!-- user页面样式 -->
+	<div class="connoisseur">
+		<div class="conform">
+				<div class="cfD">
+					<input class="userinput" id="u_name" type="text" placeholder="输入角色名" name="role_name"/>
+					<button class="userbtn tj" id="register">添加</button>
+				</div>
+		</div>
+		<!-- user 表格 显示 -->
+		<div class="conShow">
+			<table border="1" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="66px" class="tdColor tdC">序号</td>
+					<td width="400px" class="tdColor">角色名称</td>
+					<td width="630px" class="tdColor">添加时间</td>
+					<td width="130px" class="tdColor">操作</td>
+				</tr>
+				{volist name='rolelist' id='v'}
+				<tr height="40px">
+					<td>{$v.role_id}</td>
+					<td><span class="name">{$v.role_name}</span><input type="text" class="u_name" value="" hidden /></td>
+					<td>{$v.creat_role_time}</td>
+					<td>
+						<a href="javascript:;" class="upd">
+							<img class="operation" src="img/update.png">
+						</a>
+						<img class="operation delban del" src="img/delete.png" id="{$v.role_id}">
+					</td>
+				</tr>
+				{/volist}
+			</table>
+			<div class="paging"></div>
+		</div>
+		<!-- user 表格 显示 end-->
+	</div>
+	<!-- user页面样式end -->
+</div>
+</div>
 </body>
+
+<script type="text/javascript">
+	//角色删除
+	$('.del').click(function () {
+        var tk = confirm("是否删除该角色");
+        if(tk == false){
+            return false;
+		}else{
+            var role_id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "{:url('admin/role_del')}",
+                data: {role_id:role_id},
+                success: function(msg){
+					if(msg == 0){
+					    alert('删除成功');
+                        window.location.href="{:url('admin/role')}"
+					}else {
+					    alert('删除失败');
+					}
+                }
+            });
+		}
+    });
+	//角色添加
+	$('.tj').click(function () {
+		var role_name = $('input[name=role_name]').val();
+        $.ajax({
+            type: "POST",
+            url: "{:url('admin/role_add')}",
+            data: {role_name:role_name},
+            success: function(msg){
+				if(msg == 0){
+				    alert('角色名不能为空');
+				}else if(msg == 1){
+				    alert('添加成功');
+                    window.location.href="{:url('admin/role')}"
+				}else if(msg == 2){
+				    alert('添加失败');
+                    window.location.href="{:url('admin/role')}"
+				}
+            }
+        });
+    });
+// 广告弹出框
+$(".delban").click(function(){
+  $(".banDel").show();
+});
+$(".close").click(function(){
+  $(".banDel").hide();
+});
+$(".no").click(function(){
+  $(".banDel").hide();
+});
+// 广告弹出框 end
+$(document).on("click",".upd",function(){
+	$(".name").hide()
+	$(".u_name").show()
+});
+</script>
 </html>
