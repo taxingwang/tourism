@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="order by dede58.com/" />
+<title>Traveler-查看评论</title>
+    <base href="http://www.tours.com/">
+<meta content="Traveler" name="keywords" />
+<meta content="Traveler" name="description" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/lightbox.css" rel="stylesheet" type="text/css" />
+<link href="css/zhuce.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/lrtk.js"></script>
+<script type="text/javascript" src="js/lightbox.js"></script>
+<script type="text/javascript" src="js/jquery.superslide.2.1.1.js"></script>
+</head>
+<style type="text/css">
+    table.gridtable {font-family: verdana,arial,sans-serif;font-size:15px;color:#333333;border-width: 1px;border-color: #666666;border-collapse: collapse;
+    }
+    table.gridtable th {border-width: 1px;padding: 8px; border-style: solid;border-color: #696969; background-color: #dedede;}
+    table.gridtable td { border-width: 0px;padding: 8px;border-style: solid;border-color: #666666;background-color: #ffffff;}
+    .button {
+        background-color: #A9A9A9; /* Green */border: none; color: white;padding: 8px 20px ;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;
+        cursor: pointer;float: right;}
+    .button:hover {background-color: #808080;}
+    /*分页样式*/
+    .pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}
+    .pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}
+    .pagination .active{background-color: #dd1a20;color: #fff;}
+    .pagination .disabled{color:#aaa;}
+</style>
+<body>
+<div class="top_box">
+    <div class="top_nav">
+        <div class="top_left">欢迎来到Traveler官方网站，我们竭诚为您服务！</div>
+       <div class="top_right">
+      {if(empty($username))}
+        <div class="login">
+            <a href="{:url('login/login')}">登录</a></div>
+      <div class="regist">
+        <ul>
+          <li><a href="{:url('login/register')}">免费注册</a></li>
+        </ul>
+      </div>
+        {else/}
+        <div class="login"><a><font color="red" id="user" style="font-size:15px;">{$username}</font></a></div>
+            <div class="regist">
+                <ul><li><a href="{:Url('Index/go_out')}"><font color="black">退出</font></a></li></ul>
+            </div>
+        {/if}
+    </div>
+    </div>
+</div>
+
+<div class="header">
+	<div class="logo"><a href="#"><img src="images/logo.png" width="194" height="55" /></a></div>
+    <div class="logo01"><a href="#"><img src="images/logo_01.png" width="368" height="40" /></a></div>
+    <div class="logo02"><a href="#"><img src="images/logo_02.png" width="387" height="45" /></a></div>
+</div>
+
+<div class="top_menus">
+    <div class="menus">
+        <ul>
+            <li><a href="{:url('Index/index')}" title="首页">首页</a></li>
+            <li><a href="{:url('Order/order_list')}" title="我的订单">我的订单</a></li>
+            <li><a href="{:url('News/new_list')}" title="新闻动态">新闻动态</a></li>
+            <li><a href="{:url('Line/line')}" title="精选线路">精选线路</a></li>
+            <li><a href="{:url('Spot/spot')}" title="景点专列">景点专列</a></li>
+            <li style="background-color:red;"><a href="{:url('Comment/comment')}" title="查看评论">查看评论</a></li>
+            <li><a href="{:url('Collection/my_collection')}" title="我的收藏">我的收藏</a></li>
+        </ul>
+    </div>
+
+<form action="{:url('Line/search')}" method="post">
+            <dl class="top_search">
+                <dt><input type="text"placeholder="成百上千旅游路线，总有一款适合您！" name="title" class="input_text" /></dt>
+                <dd><input type="image" class="input_image" src="images/dd_bg.png" /></dd>
+            </dl>
+        </form>
+</div>
+
+<div class="main">
+
+<!--tag标题-->
+<div id="menu03">
+<div class="paishe_bt">
+<h1>查看评论</h1>
+<ul id="nav03">
+      <li class="selectall"> <a href="javascript:void(0)" onclick="selectTag('tagContent0',this)">评论</a></li>
+</ul>
+    <input type="hidden" value="{$id}" name="spot_id">
+</div>
+<div class="paishe_catpos">当前位置：<a href="{:url('Comment/comment')}" title="首页">查看评论</a> > <a href="{:url('Comment/comment_list')}?id={$id}">评论</a> ></div>
+</div>
+
+<!--二级菜单-->
+    <div id="menu_con04">
+    
+       <div style="display: block;" class="tagContent01" id="tagContent0">
+</div>
+<div class="basic_info">
+	<div class="one"></div>
+    <div class="two"></div>
+    {volist name='comment' id='v'}
+        <table class="gridtable">
+            <tr>
+                <th style="width: 400px;"><span style="float: left"><span style="color: red">{$v['is_show'] == 1 ? $v.username : "匿名"}</span>：{$v.com_content}</span></th>
+            </tr>
+            <tr>
+                <td style="font-size: 5px;">{$v.com_time}</td>
+            </tr>
+        </table>
+    {/volist}
+    <table>
+        <tr>
+            <td><textarea name="textarea" cols="80" rows="5"></textarea></td>
+        </tr>
+        <tr>
+            <td><span style="color: #0C0C0C;"><input type="checkbox" name="is_show" class="is_show">是否匿名</span><button class="button btn">发布评论</button></td>
+        </tr>
+    </table>
+    <div class="pagination">{$comment->render()}</div>
+</div>
+</div>
+<div class="clear"></div>
+</div>
+<div class="footer">
+	<ul>
+    	<li><a href="#">关于我们</a></li>
+        <li><a href="#">联系我们</a></li>
+        <li><a href="#">员工风采</a></li>
+        <li><a href="#">网站地图</a></li>
+        <li><a href="#">帮助中心</a></li>
+        <li><a href="#">友情链接</a></li>
+    </ul>
+</div>
+
+<div class="foot">
+山东家天下国际旅行社有限公司 旅游经营许可证：L-SD-01260<br/>
+山东交运旅游集团济南家天下分公司 旅游经营许可证号：L-SD-CJ00010 <br/>
+Copyright © 2016-2020 山东家天下国际旅行社有限公司 版权所有　管理备案号：鲁ICP备10202078号-2<br/>
+旅游局投诉电话：<span>12301</span>&nbsp;&nbsp;技术支持：<a href="http://www.jnyunchang.com/">云畅网络</a>
+<ul>
+	<li><img src="images/copyright01.jpg" width="103" height="32" alt="经营性网站 备案信息" /></li>
+    <li><img src="images/copyright02.jpg" width="103" height="32" alt="可信网站 信用评价" /></li>
+    <li><img src="images/copyright03.jpg" width="103" height="32" alt="可信网站 信用评价" /></li>
+</ul>
+</div>
+</body>
+</html>
+<script>
+    $('.btn').click(function () {
+        var val = $('textarea[name=textarea]').val();
+        var spot_id = $('input[name=spot_id]').val();
+        var is_sho = $('.is_show');
+        var parten = /^\s*$/ ;
+        if(parten.test(val)){
+            alert('评论内容不能为空');
+        }else if(val.length > 50){
+            alert('评论内容过长');
+        }else {
+            if(is_sho.is(":checked")){
+                var is_show = 0;
+            }else {
+                var is_show = 1;
+            }
+            data = {
+                'val':val,
+                'spot_id':spot_id,
+                'is_show':is_show
+            };
+            $.ajax({
+                type: "POST",
+                url: "{:url('comment/com')}",
+                data: data,
+                success: function(msg){
+                    if(msg == 0){
+                        alert('请先登录');
+                        window.location.href="{:url('login/login')}"
+                    }else if(msg == 1){
+                        window.location.reload();
+                    }else {
+                        alert('出错了！！！');
+                    }
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Travler-角色管理</title>
+	<base href="http://www.tours.com/admin/">
+<link rel="stylesheet" type="text/css" href="css/css.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="js/jquery-3.3.1.js"></script> -->
+<!-- <script type="text/javascript" src="js/page.js" ></script> -->
+</head>
+
+<body>
+<div id="pageAll">
+<div class="pageTop">
+	<div class="page">
+		<img src="img/coin02.png" /><span><a href="{:url('index/main')}">首页</a>&nbsp;-&nbsp;-</span>&nbsp;后台人事管理&nbsp;-&nbsp;-角色权限分配
+	</div>
+</div>
+
+<div class="page">
+	<!-- 路线添加样式 -->
+	<div class="connoisseur">
+		<div class="conform">
+				<div class="cfD">
+					<select name="role_id" id="role_id">
+						<option value="0">请选择角色</option>
+						{volist name='role' id='v'}
+						<option value="{$v.role_id}">{$v.role_name}</option>
+						{/volist}
+					</select>
+					<button class="userbtn tj" id="add">确定提交</button>
+				</div>
+		</div>
+		<!-- 景点 分类 显示 -->
+		<div class="conShow">
+			<font color="#4682B4" style="font-size:18px;">父级权限-子权限</font><br />
+			<font color="#4682B4" style="font-size:18px;">-------------------------------------------------------------------------------------------------------</font>
+			<table frame=void cellspacing="0" cellpadding="0">
+				{foreach $data as $v} 
+				<tr>
+					<td width="180px" class="tdColor" name="parent"><input type="checkbox" class="access" name="parent_access" value="{$v.access_id}" />{$v.access_name}</td>
+					{if(isset($v.son))}
+						{if(is_array($v.son))}
+							{foreach $v.son as $vo}
+							<td width="160px" name="child" class="tdColor tdC"><input type="checkbox" class="access" name="access" value="{$vo.access_id}" />{$vo.access_name}</td>
+							{/foreach} 
+						{else/}
+						<td></td>
+						{/if}
+					{else/}
+						<td></td>
+					{/if}
+				</tr>
+				{/foreach}
+			</table>
+			<script>
+			$(document).on("click",".access",function(){
+				var obj = $(this)
+				var name = obj.attr("name")
+				if(name=="access"){
+					if(obj.is(":checked")){
+						obj.parents("tr").children(":first").children().prop("checked",true)
+					}
+				}else{
+					if(obj.is(":checked")){
+						obj.parents("tr").children().children().prop("checked",true)
+					}else{
+						obj.parents("tr").children().children().prop("checked",false)
+					}
+				}
+			})
+			</script>
+			<div class="paging"></div>
+		</div>
+		<!-- 景点 分类 显示 end-->
+	</div>
+	<!-- 路线添加样式end -->
+</div>
+</div>
+</body>
+
+<script type="text/javascript">
+$(document).on("change","#role_id",function(){
+	var role_id = $(this).val()
+	$.ajax({
+		data:{"role_id":role_id},
+		url:"{:Url('Admin/getAccess')}",
+		type:"post",
+		dataType:"json",
+		success:function(msg){
+			var data = eval(msg)
+			var obj = $(".access")
+			obj.prop("checked",false)
+			var access_count = obj.length
+			var data_count = data.length
+			for(var i=0;i<data_count;i++){
+				for(var j=0;j<access_count;j++){
+					if(data[i]==obj[j].value){
+						$("input[name='parent_access'][value="+obj[j].value+"]").prop("checked",true);
+						$("input[name='access'][value="+obj[j].value+"]").prop("checked",true);
+					}
+				}
+			}
+		}
+	})
+})
+$(document).on("click","#add",function(){
+	var role_id = $("#role_id").val()
+	var obj = $(".access")
+	var access_ids = ""
+	for(var i=0;i<obj.length;i++){
+		if(obj[i].checked){
+			access_ids += obj[i].value+','
+		}
+	}
+	if(role_id==0){
+		alert("请先选择角色")
+		return false
+	}else{
+		$.ajax({
+			data:{"role_id":role_id,"access_ids":access_ids},
+			url:"{:Url('Admin/change_RoleAccess')}",
+			type:"post",
+			success:function(msg){
+				if(msg==1){
+					alert("权限已修改")
+				}else{
+					alert("出错了！！！")
+				}
+			}
+		})
+	}
+})
+</script>
+</html>

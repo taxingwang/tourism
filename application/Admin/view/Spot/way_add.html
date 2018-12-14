@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Travler-路线添加</title>
+	<base href="http://www.tours.com/admin/">
+<link rel="stylesheet" type="text/css" href="css/css.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="js/page.js" ></script> -->
+</head>
+
+<body>
+<div id="pageAll">
+<div class="pageTop">
+	<div class="page">
+		<img src="img/coin02.png" /><span><a href="{:url('index/main')}">首页</a>&nbsp;-&nbsp;-</span>&nbsp;景点路线管理&nbsp;-&nbsp;-路线添加
+	</div>
+</div>
+
+<div class="page">
+	<!-- 路线添加样式 -->
+	<div class="connoisseur">
+		<div class="conform">
+				<div class="cfD">
+					<input class="userinput" id="route_name" type="text" placeholder="输入路线名称" name="route_name" style="width: 110px"/>
+					<input class="userinput" id="money" type="text" placeholder="路线票价（单人）" name="money" style="width: 132px"/>
+					<input class="userinput" id="days" type="text" placeholder="旅游天数" name="days" style="width: 80px"/>
+					<input class="userinput" id="route_desc" type="text" placeholder="路线简介" name="route_desc"/>
+					<button class="userbtn tj" id="add">添加</button>
+				</div>
+		</div>
+		<!-- 景点 分类 显示 -->
+		<div class="conShow">
+		<font color="#4682B4" style="font-size:18px;">分类-添加景点</font><br />
+			<font color="#4682B4" style="font-size:18px;">-------------------------------------------------------------------------------------------------------</font>
+			<table border="0" cellspacing="0" cellpadding="0">
+				
+				{foreach $class as $v} 
+				<tr>
+					<td width="80px" class="tdColor">{$v.class_name}</td>
+					{if(isset($v.son))}
+						{if(is_array($v.son))}
+							{foreach $v.son as $vo}
+							<td width="100px" class="tdColor tdC"><input type="checkbox" class="spots" name="spots" value="{$vo.spot_id}" />{$vo.spot_name}</td>
+							{/foreach} 
+						{else/}
+						<td></td>
+						{/if}
+					{else/}
+						<td></td>
+					{/if}
+				</tr>
+				{/foreach}
+			</table>
+			<div class="paging"></div>
+		</div>
+		<!-- 景点 分类 显示 end-->
+	</div>
+	<!-- 路线添加样式end -->
+</div>
+</div>
+</body>
+
+<script type="text/javascript">
+$(document).on("click","#add",function(){
+	var route_name = $("#route_name").val();
+	var money = $("#money").val();
+	var days = $("#days").val();
+	var route_desc = $("#route_desc").val();
+	var obj = $(".spots");
+	var spots="";
+	for(var i=0;i<obj.length;i++){
+		if(obj[i].checked){
+			spots += obj[i].value+','
+		}
+	}
+	if(route_name==""){
+		alert("路线名不能为空");
+		return false
+	}else if(money==""){
+		alert("票价不能为空");
+		return false
+	}else if(days==""){
+		alert("天数不能为空");
+		return false
+	}else if(spots==""){
+		alert("您还没有选择景点");
+		return false
+	}else if(route_desc==""){
+        alert("简介不能为空");
+        return false
+	}else{
+		$.ajax({
+			data:{"route_name":route_name,"money":money,"days":days,"spots":spots,"route_desc":route_desc},
+			type:"post",
+			url:"{:Url('Spot/way_add_do')}",
+			success:function(msg){
+				if(msg==1){
+					alert("路线添加成功")
+					window.location.reload()
+				}else{
+					alert("出错了！！！")
+				}
+			}
+		})
+	}
+})
+</script>
+</html>

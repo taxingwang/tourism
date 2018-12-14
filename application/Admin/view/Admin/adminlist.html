@@ -2,18 +2,22 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>员工管理-有点</title>
+<title>Travler-员工管理</title>
 	<base href="http://www.tours.com/admin/">
 <link rel="stylesheet" type="text/css" href="css/css.css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <!-- <script type="text/javascript" src="js/page.js" ></script> -->
 </head>
-
+<style>
+.upd{
+	float: right;
+}
+</style>
 <body>
 <div id="pageAll">
 <div class="pageTop">
 	<div class="page">
-		<img src="img/coin02.png" /><span><a href="{:url('index/main')}">首页</a>&nbsp;-&nbsp;-</span>&nbsp;后台人事管理&nbsp;-&nbsp;-员工管理
+		<img src="img/coin02.png" /><span><a href="index/index" target="_top">首页</a>&nbsp;-&nbsp;-</span>&nbsp;后台人事管理&nbsp;-&nbsp;-员工管理
 	</div>
 </div>
 
@@ -38,26 +42,59 @@
 			<table border="1" cellspacing="0" cellpadding="0">
 				<tr>
 					<td width="66px" class="tdColor tdC">序号</td>
-					<td width="435px" class="tdColor">会员等级</td>
-					<td width="400px" class="tdColor">用户名</td>
-					<td width="630px" class="tdColor">最后登录时间</td>
-					<td width="130px" class="tdColor">操作</td>
+					<td width="435px" class="tdColor">用户名</td>
+					<td width="400px" class="tdColor">会员等级</td>
+					<td width="400px" class="tdColor">状态</td>
+					<td width="530px" class="tdColor">最够登录时间</td>
+					<td width="230px" class="tdColor">操作</td>
 				</tr>
 				{volist name='adminlist' id='v'}
 				<tr height="40px">
 					<td>{$v.admin_id}</td>
-					<td>{$v.role_name}</td>
-					<td><span class="name">{$v.accounts}</span><input type="text" class="u_name" value="" hidden /></td>
-					<td>{$v.last_time}</td>
-					<td>
-						<a href="javascript:;" class="upd">
+					<td>{$v.accounts}</td>
+					<td><span class="name">{$v.role_name}</span>
+						<select name="role_name" class="role_name" dss="{$v.admin_id}" hidden>
+							{volist name='rolelist' id='vv'}
+							{if condition="$v.role_id eq $vv.role_id"}
+							<option value="{$vv.role_id}" selected>{$vv.role_name}</option>
+							{else /}
+							<option value="{$vv.role_id}">{$vv.role_name}</option>
+							{/if}
+							{/volist}
+						</select>
+					<a href="javascript:;" class="upd" value="{$v.admin_id}" title="点击进行修改">
 							<img class="operation" src="img/update.png">
 						</a>
-						<img class="operation delban del" src="img/delete.png" id="{$v.admin_id}">
+					</td>
+
+					<td>{if($v.status==1)}<font color="green">正常</font>
+						{else/}
+						<font color="red">已冻结</font>{/if}</td>
+					<td>{$v.last_time}</td>
+					<td>{if($v.status==1)}
+						<img class="operation delban del" src="img/close.png" names="{$v.status}" name="{$v.admin_id}" title="点击冻结该账号">
+						{else/}
+						<img class="operation delban del" src="img/open.png" names="{$v.status}" name="{$v.admin_id}" title="点击激活该账号">
+						{/if}
 					</td>
 				</tr>
 				{/volist}
 			</table>
+			<script>
+			var status=0
+			$(document).on("click",".upd",function(){
+			    var obj = $(this)
+			    if(status==0){
+					obj.parents("tr").children().children(".name").hide()
+			    	obj.parents("tr").children().children(".role_name").show()
+			    	status=1
+			    }else{
+			    	obj.parents("tr").children().children(".name").show()
+			    	obj.parents("tr").children().children(".role_name").hide()
+			    	status=0
+			    }
+			});
+			</script>
 			<div class="paging"></div>
 		</div>
 		<!-- user 表格 显示 end-->
@@ -69,30 +106,33 @@
 </body>
 
 <script type="text/javascript">
-	//管理员删除
+		//管理员删除
         $('.del').click(function () {
-            var tk = confirm("是否删除该账号");
-            if(tk == false){
-                return false;
-			}else {
-                var admin_id = $(this).attr('id');
-
+        	var status = $(this).attr("names")
+        	var admin_id = $(this).attr("name")
+        	if(status==1){
+				var tk = confirm("是否冻结该账号")
+        	}else{
+        		var tk = confirm("是否激活该账号")
+        	}
+            if(tk == true){
                 $.ajax({
-                    type: "POST",
-                    url: "{:url('admin/admin_del')}",
-                    data: {admin_id:admin_id},
+                    type:"POST",
+                    url:"{:Url('Admin/change_AdminStatus')}",
+                    data:{"admin_id":admin_id,"status":status},
                     success: function(msg){
-                        if(msg == 0){
-                            alert('删除成功');
-                            location.href="{:url('admin/adminlist')}";
-                        }else {
-                            alert('删除失败');
-                            location.href="{:url('admin/adminlist')}";
+                        if(msg == 1){
+                            alert('操作成功')
+                            window.location.reload()
+                        }else{
+                            alert('出错了！！！')
                         }
                     }
-                });
+                })
+			}else {
+				return false
 			}
-        });
+        })
         //管理员添加
         $('.tj').click(function () {
             var accounts = $('input[name=accounts]').val();
@@ -106,7 +146,7 @@
                 'accounts':accounts,
                 'password':password,
                 'role_id':role_id
-			}
+			};
             $.ajax({
                 type: "POST",
                 url: "{:url('admin/admin_add')}",
@@ -115,29 +155,35 @@
 					if(msg == 1){
 					    alert('该账号已经存在');
 					}else if(msg == 2){
-					    alert('添加成功')
 						window.location.href="{:url('admin/adminlist')}"
 					}else if(msg == 3){
 					    alert('添加失败');
-                        window.location.href="{:url('admin/adminlist')}"
 					}
                 }
             });
         });
-// 广告弹出框
-$(".delban").click(function(){
-  $(".banDel").show();
-});
-$(".close").click(function(){
-  $(".banDel").hide();
-});
-$(".no").click(function(){
-  $(".banDel").hide();
-});
-// 广告弹出框 end
-$(document).on("click",".upd",function(){
-	$(".name").hide()
-	$(".u_name").show()
-});
+        //修改管理员的角色
+        $(document).on("change",".role_name",function (){
+        	var role_id = $(this).val();
+        	var admin_id = $(this).attr('dss');
+            data = {
+                'role_id':role_id,
+                'admin_id':admin_id
+            };
+            $.ajax({
+                type: "POST",
+                url: "{:url('admin/admin_save')}",
+                data: data,
+                success: function(msg){
+					if(msg == 0){
+                        window.location.href="{:url('admin/adminlist')}"
+					}else {
+					    alert('修改失败');
+					}
+                }
+            });
+    	});
+
+
 </script>
 </html>

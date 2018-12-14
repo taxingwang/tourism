@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Travler-景点详情</title>
+<base href="http://www.tours.com/admin/">
+<link rel="stylesheet" type="text/css" href="css/css.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="js/page.js" ></script> -->
+</head>
+
+<body>
+	<div id="pageAll">
+		<div class="pageTop">
+			<div class="page">
+				<img src="img/coin02.png" /><span><a href="#">首页</a>&nbsp;-&nbsp;<a
+					href="#">景点管理</a>&nbsp;-</span>&nbsp;景点详情
+			</div>
+		</div>
+
+		<div class="page">
+			<!-- 页面样式 -->
+			<div class="wish">
+				<div class="conform">
+				</div>
+				<!--  表格 显示 -->
+				<div class="wishShow">
+					<table border="1">
+						<tr>
+							<td width="220px" class="tdColor">景点名称</td>
+							<td>{$data.spot_name}</td>
+						</tr>
+						<tr>
+							<td width="200px" class="tdColor">景点所在地</td>
+							<td>{$data.area_name}</td>
+						</tr>
+						<tr>
+							<td width="200px" class="tdColor">景点简介</td>
+							<td>{$data.spot_desc}</td>
+						</tr>
+						<tr>
+							<td width="200px" class="tdColor">详细介绍</td>
+							<td>{$data.spot_message}</td>
+						</tr>
+						<tr>
+							<td width="200px" class="tdColor">景点评分</td>
+							<td>{$data.spot_point}</td>
+						</tr>
+						<tr>
+							<td width="200px" class="tdColor">类别</td>
+							<td>{$data.class_name}</td>
+						</tr>
+						<tr>
+							<td width="200px" class="tdColor">是否开放</td>
+							<td>{if($data.spot_status==1)}是{else/}否{/if}</td>
+						</tr>
+						<tr>
+							<td width="200px" class="tdColor">点击量</td>
+							<td>{$data.click_num}</td>
+						</tr>
+						<tr>
+							<td width="200px" class="tdColor">景点图片</td>
+							<td>{volist name="dataImg" id="vo"}<img src="{$vo.spot_images}" whide="160" height="90" alt="" aa="{$vo.id}" class="img" />{/volist}</td>
+						</tr>
+					</table>
+					
+					<div class="paging"></div>
+				</div>
+				<!-- 表格 显示 end-->
+			</div>
+			<!-- 页面样式end -->
+			
+		</div>
+
+	</div>
+
+</body>
+
+<script type="text/javascript">
+
+</script>
+</html>

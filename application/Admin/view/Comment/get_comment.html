@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Travler-景点评论</title>
+	<base href="http://www.tours.com/admin/" />
+	<link rel="stylesheet" type="text/css" href="css/css.css" />
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="js/page.js" ></script> -->
+</head>
+<style>
+	.pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}
+	.pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}
+	.pagination .active{background-color:#4169E1;color: #fff;}
+	.pagination .disabled{color:#4169E1;}
+	.button {
+		display: inline-block;
+		padding: 8px 16px;
+		font-size: 6px;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		outline: none;
+		color: #fff;
+		background-color: #4169E1;
+		border: none;
+		border-radius: 15px;
+		box-shadow: 0 9px #999;
+	}
+
+	.button:hover {background-color:#0000FF}
+
+	.button:active {
+		background-color: #3e8e41;
+		box-shadow: 0 5px #666;
+		transform: translateY(4px);
+	}
+</style>
+<body>
+<div id="pageAll">
+	<div class="pageTop">
+		<div class="page">
+			<img src="img/coin02.png" /><span><a href="index/index" target="_top">首页</a>&nbsp;-&nbsp;<a>评论管理</a>&nbsp;-</span>&nbsp;评论列表
+		</div>
+	</div>
+	<div class="page">
+		<!-- banner页面样式 -->
+		<div class="banner">
+			<!-- <div class="add">
+                <a class="addA" href="{:Url('Spot/spot_add')}">添加景点&nbsp;&nbsp;+</a>
+            </div> -->
+			<!-- banner 表格 显示 -->
+			<div class="banShow">
+				<table border="1" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="50px" class="tdColor tdC">序号</td>
+						<td width="160px" class="tdColor">用户名</td>
+						<td width="300px" class="tdColor">评论内容</td>
+						<td width="130px" class="tdColor">是否匿名</td>
+						<td width="200px" class="tdColor">评论时间</td>
+						<td width="100px" class="tdColor">操作</td>
+					</tr>
+					{volist name='comment' id='v'}
+					<tr height="40px" id="tr">
+						<td>{$v.com_id}</td>
+						<td>{$v.username}</td>
+						<td>{$v.com_content}</td>
+						<td>{$v.is_show == 1 ? "未匿名" : "匿名"}</td>
+						<td>{$v.com_time}</td>
+						<td>
+							<button class="button del" id="{$v.com_id}">删除</button>
+						</td>
+					</tr>
+					{/volist}
+				</table>
+				<div class="pagination">{$comment->render()}</div>
+			</div>
+			<!-- banner 表格 显示 end-->
+		</div>
+		<!-- banner页面样式end -->
+	</div>
+</div>
+</body>
+<script type="text/javascript">
+	//处理点击删除的评论
+	$('.del').click(function () {
+		var id = $(this).attr('id');
+            $.ajax({
+                type: "POST",
+                url: "{:url('Comment/comment_del')}",
+                data: {id:id},
+                success: function(msg){
+					if(msg == 0){
+                        window.location.reload();
+					}else {
+					    alert('出错了！！！')
+					}
+                }
+            });
+    });
+    // 广告弹出框
+    $(".delban").click(function(){
+        $(".banDel").show();
+    });
+    $(".close").click(function(){
+        $(".banDel").hide();
+    });
+    $(".no").click(function(){
+        $(".banDel").hide();
+    });
+</script>
+</html>

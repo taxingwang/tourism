@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Travler-景点图片</title>
+<base href="http://www.tours.com/admin/">
+<link rel="stylesheet" type="text/css" href="css/css.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<div id="pageAll">
+		<div class="pageTop">
+			<div class="page">
+				<img src="img/coin02.png" /><span><a href="Index/index" target="_top">首页</a>&nbsp;-&nbsp;<a
+					href="#">路线管理</a>&nbsp;-</span>&nbsp;路线封面上传
+			</div>
+		</div>
+		<div class="page ">
+			<div class="banneradd bor">
+				<div class="baTop">
+					<span>添加路线图片</span>
+				</div>
+				<form action="{:Url('Spot/way_img_add_do')}" method="post" enctype="multipart/form-data">
+				<div class="baBody">
+					<div class="bbD">
+						路线名称：<span>{$data.route_name}</span>
+						<input type="hidden" name="route_id" value="{$data.route_id}"/>
+					</div>
+					<div class="bbD">
+						路线图片：
+						<div class="bbDd">
+							<div class="bbDImg">+</div>
+							<input type="file" class="file" name="route_imgs" />
+						</div>
+					</div>
+					<div class="bbD">
+						<p class="bbDP">
+							<input type="submit" class="btn_ok btn_yes"/>
+							<a class="btn_ok btn_no" target="_top" href="Index/index">取消</a>
+						</p>
+					</div>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

@@ -15,16 +15,13 @@ class Index extends Common
         $role = Db::table("admin_role")->where("admin_id=$admin_id")->find();
         $role_id = $role['role_id'];
         if($role_id==1){
-            $access = Db::table("access")->select();
+            $access = Db::table("access")->where("access_status",1)->select();
         }else{
-            $role_access = Db::table("role_access")->where("role_id='$role_id'")->select();
-            $access_ids = "";
-            foreach ($role_access as $key => $value) {
-                $access_ids .=",".$value['access_id'];
-            }
-            $access_id = ltrim($access_ids,",");
-            $where["access_id"] = array("in","$access_id");
-            $access = Db::table("access")->where($where)->select();
+            $access_id = Db::table("role_access")->where("role_id='$role_id'")->column('access_ids');
+            $access_ids = $access_id[0];
+            // var_dump($access_ids);die;
+            $where["access_id"] = array("in","$access_ids");
+            $access = Db::table("access")->where($where)->where("access_status",1)->select();
         }
         $data = array();
         foreach ($access as $key => $value) {
@@ -42,7 +39,11 @@ class Index extends Common
     }
     //头部
     public function head(){
+        $admin_id = Session::get("admin_id");
         $accounts = Session::get("accounts");
+        $data = Db::table("admin_role")->alias("a")->join("role r","a.role_id=r.role_id")->where("admin_id",$admin_id)->column('role_name');
+        
+        $this->assign("role_name",$data[0]);
         $this->assign("accounts",$accounts);
 
     	return view();

@@ -1,0 +1,183 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<base href="http://www.tours.com/">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="order by dede58.com/" />
+<title>Traveler-帐号激活</title>
+<meta content="Traveler" name="keywords" />
+<meta content="Traveler" name="description" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/lightbox.css" rel="stylesheet" type="text/css" />
+<link href="css/zhuce.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/lrtk.js"></script>
+<script type="text/javascript" src="js/lightbox.js"></script>
+<script type="text/javascript" src="js/jquery.superslide.2.1.1.js"></script>
+</head>
+<body>
+<div class="top_box">
+  <div class="top_nav">
+    <div class="top_left"><font color="red">欢迎来到Traveler官方网站，我们竭诚为您服务！</font></div>
+    <div class="fx">
+    </div>
+    <div class="top_right">
+      <!-- <div class="phone"><a href="login.html">移动端</a></div> -->
+      <div class="login"><a href="{:Url('Login/login')}">登录</a></div>
+      <div class="regist">
+        <ul>
+          <li><a href="{:url('login/register')}">免费注册</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="header">
+	<div class="logo"><a href="javascript:void(0)"><img src="images/logo.png" width="194" height="55" /></a></div>
+	<div class="logo01"><a href="javascript:void(0)"><img src="images/logo_01.png" width="368" height="40" /></a></div>
+	<div class="logo02"><a href="javascript:void(0)"><img src="images/logo_02.png" width="387" height="45" /></a></div>
+</div>
+<div class="top_menus">
+<div class="menus">
+	<ul>
+		<li><a href="{:url('Index/index')}" title="首页">首页</a></li>
+		<li><a href="{:url('Order/order_list')}" title="我的订单">我的订单</a></li>
+		<li><a href="{:url('News/new_list')}" title="新闻动态">新闻动态</a></li>
+		<li><a href="{:url('Line/line')}" title="精选线路">精选线路</a></li>
+		<li><a href="{:url('Spot/spot')}" title="景点专列">景点专列</a></li>
+		<li><a href="{:url('Comment/comment')}" title="查看评论">查看评论</a></li>
+		<li><a href="{:url('Collection/my_collection')}" title="我的收藏">我的收藏</a></li>
+	</ul>
+</div>
+<form action="{:url('Line/search')}" method="post">
+        	<dl class="top_search">
+            	<dt><input type="text"placeholder="成百上千旅游路线，总有一款适合您！" name="title" class="input_text" /></dt>
+                <dd><input type="image" class="input_image" src="images/dd_bg.png" /></dd>
+            </dl>
+        </form>
+</div>
+<div class="main">
+<div class="zhuce_bt">
+      <div class="zhuce_catpos">当前位置：<a href="{:url('index/index')}" title="首页">首页</a> > <a href="{:url('login/activation')}">账号激活</a></div>账号激活</div>
+<ul id="zctags">
+	<li class="selectTag"> <a href="javascript:void(0)" onclick="selectTag('tagContent0',this)">账号激活</a></li>
+    <span>帐号已激活，现在就<a href="{:url('login/login')}">登陆</a></span>
+</ul>
+<div class="theme_main">
+	<div id="zccon">
+		<div id="zctagContent">
+			<div style="display: block;" class="tagContent selectTag" id="tagContent0"> 　
+				<div id="zhuce_l">
+					<div class="mail">
+						<span class="text_font">用户名：</span>
+						<input type="text" value="" autocomplete="off" class="f-text" id="msgCode" name="username" placeholder="输入您的用户名">
+						<span id="username1"></span>
+					</div>
+					<div class="mail">
+						<span class="text_font">*邮箱：</span>
+						<input type="text" autocomplete="off" class="f-text" id="email" name="email" placeholder="输入您的邮箱">
+						<span id='email1' ></span>
+					</div>
+					<div class="ljzcan">
+						<input type='hidden' id="flag1" value='2' />
+						<input type='hidden' id="flag2" value='2' />
+						<input type='hidden' id="flag3" value='2' />
+						<input class="ljzc jh" name="commit" value="发送邮件进行激活" type="button" >
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div id="zhuce_r"><img src="images/zhuce.jpg" /></div>
+</div>
+</div>
+</body>
+</html>
+<script>
+var check_username = false;
+$(document).on("blur","#msgCode",function(){
+	var username = $(this).val()
+	$("#username1").empty()
+	$.ajax({
+		data:{"username":username},
+		type:"post",
+		url:"{:Url('Login/GetAccounts')}",
+		success:function(msg){
+			if(msg==1){
+				var str = "<font color='green'>✔</font>"
+					$("#username1").append(str)
+					check_username = true;
+					return;
+			}else{
+				var str = "<font color='red'>*该账号不存在</font>"
+					$("#username1").append(str)
+					check_username = false;
+					return;
+			}
+		}
+	})
+})
+var check_email = false;
+$(document).on("blur","#email",function(){
+	var username = $("#msgCode").val()
+	var email = $(this).val()
+	$("#email1").empty()
+	if(username == ""){
+		var str = "<font color='red'>*请先输入用户名</font>"
+					$("#email1").append(str)
+					check_email = false;
+					return;
+	}else{
+		if(email==""){
+			var str = "<font color='red'>*请输入邮箱</font>"
+					$("#email1").append(str)
+					check_email = false;
+					return;
+		}else{
+		$.ajax({
+			data:{"username":username,"email":email},
+			type:"post",
+			url:"{:Url('Login/GetAccounts')}",
+			success:function(msg){
+				if(msg==1){
+					var str = "<font color='green'>✔</font>"
+						$("#email1").append(str)
+						check_email = true;
+						return;
+				}else{
+					var str = "<font color='red'>*邮箱输入有误</font>"
+						$("#email1").append(str)
+						check_email = false;
+						return;
+				}
+			}
+		})
+		}
+	}
+})
+$(document).on("click",".jh",function(){
+	if(check_email==true&&check_username==true){
+		var username = $("#msgCode").val()
+		var email = $("#email").val()
+		$.ajax({
+			data:{"username":username,"email":email},
+			type:"post",
+			url:"{:Url('Login/SendEmail')}",
+			success:function(msg){
+				if(msg==1){
+					alert("邮件已发送到"+email+"，请尽快前往邮箱激活，有效时间5分钟")
+				}else if(msg==3){
+					alert("当前用户5分钟内不可再次发送，请5分钟后重试")
+				}else if(msg==4){
+					alert("当前帐号已激活，请前往登录")
+					window.location.href = "{:url('Login/login')}";
+				}else{
+					alert("邮件发送失败，请重试...")
+				}
+			}
+		})
+	}else{
+		return false;
+	}
+})
+</script>

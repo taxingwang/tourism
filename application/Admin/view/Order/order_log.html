@@ -1,10 +1,167 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Travler-订单管理-历史订单</title>
+	<base href="http://www.tours.com/admin/">
+	<link rel="stylesheet" type="text/css" href="css/css.css" />
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="js/page.js" ></script> -->
 </head>
+<style>
+	.pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}
+	.pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}
+	.pagination .active{background-color:#4169E1;color: #fff;}
+	.pagination .disabled{color:#4169E1;}
+	.button {
+		display: inline-block;
+		padding: 8px 16px;
+		font-size: 2px;
+		cursor: pointer;
+		text-align: center;
+		text-decoration: none;
+		outline: none;
+		color: #fff;
+		background-color: #4169E1;
+		border: none;
+		border-radius: 15px;
+		box-shadow: 0 9px #999;
+	}
+
+	.button:hover {background-color:#0000FF}
+
+	.button:active {
+		background-color: #3e8e41;
+		box-shadow: 0 5px #666;
+		transform: translateY(4px);
+	}
+</style>
 <body>
-	历史订单列表
+<div id="pageAll">
+	<div class="pageTop">
+		<div class="page">
+			<img src="img/coin02.png" /><span><a href="index/index" target="_top">首页</a>&nbsp;-&nbsp;<a>订单系统</a>&nbsp;-</span>&nbsp;历史订单
+		</div>
+	</div>
+
+	<div class="page">
+		<!-- user页面样式 -->
+		<div class="connoisseur">
+			<div class="conform">
+				<div class="cfD">
+					<form action="{:url('order/serach')}" method="post">
+					<input class="userinput" id="u_name" type="text" placeholder="输入订单编号" name="order_number"/>
+					<button class="userbtn serach" id="register">查询</button>
+					</form>
+				</div>
+			</div>
+			<!-- user 表格 显示 -->
+			<div class="conShow">
+				<table border="1" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="66px" class="tdColor tdC">序号</td>
+						<td width="315px" class="tdColor">订单编号</td>
+						<td width="250px" class="tdColor">用户</td>
+						<td width="300px" class="tdColor">路线</td>
+						<td width="400px" class="tdColor">下单时间</td>
+						<td width="215px" class="tdColor">订单状态</td>
+						<td width="215px" class="tdColor">是否删除</td>
+						<td width="180px" class="tdColor">是否出票</td>
+						<td width="180px" class="tdColor">总价</td>
+						<td width="180px" class="tdColor">操作</td>
+					</tr>
+					{volist name='orderlist' id='v'}
+					<tr height="40px" id="tr">
+						<td>{$v.id}</td>
+						<td><a href="{:url('order/order_details')}?id={$v.id}">{$v.order_number}</a></td>
+						<td>{$v.username}</td>
+						<td>{$v.route_name}</td>
+						<td>{$v.order_time}</td>
+						<td>{$v.order_status == 0 ? "未付款" : "已付款"}</td>
+						<td>{$v.order_del_status == 0 ? "未删除" : "已删除"}</td>
+						<td>{$v.is_handle == 0 ? "未出票" : "已出票"}</td>
+						<td>￥{$v.order_money}</td>
+						<td>
+							<button class="button btn" id="{$v.id}" status="{$v.order_status}" del="{$v.order_del_status}">修改删除状态</button>
+						</td>
+					</tr>
+					{/volist}
+				</table>
+				<div class="paging">{$orderlist->render()}</div>
+			</div>
+			<!-- user 表格 显示 end-->
+		</div>
+		<!-- user页面样式end -->
+	</div>
+</div>
 </body>
+<script type="text/javascript">
+    $('.serach').click(function () {
+        var order_number = $('input[name=order_number]').val();
+        if(order_number==""){
+            alert('请输入订单编号');
+            return false;
+        }
+    });
+    $('.btn').click(function () {
+        var order_status = $(this).attr('status');
+        var del = $(this).attr('del');
+        if(order_status == 0){
+            alert('此订单还没付款');
+            return false;
+        }else {
+            if(del == 0){
+                var tk = confirm("是否修改删除状态");
+                if(tk == false){
+                    return false;
+                }else{
+                    var id = $(this).attr('id');
+                    var order_del_status = 1;
+                    $.ajax({
+                        type: "POST",
+                        url: "{:url('order/order_del_save')}",
+                        data: {id:id,order_del_status:order_del_status},
+                        success: function(msg){
+                            if(msg == 0){
+                                location.href="{:url('order/order_log')}";
+                            }else {
+                                alert('出错了')
+                            }
+                        }
+                    });
+                }
+            }else {
+                var tk = confirm("是否修改删除状态");
+                if(tk == false){
+                    return false;
+                }else{
+                    var id = $(this).attr('id');
+                    var order_del_status = 0;
+                    $.ajax({
+                        type: "POST",
+                        url: "{:url('order/order_del_save')}",
+                        data: {id:id,order_del_status:order_del_status},
+                        success: function(msg){
+                            if(msg == 0){
+                                location.href="{:url('order/order_log')}";
+                            }else {
+                                alert('出错了')
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    });
+    // 广告弹出框
+    $(".delban").click(function(){
+        $(".banDel").show();
+    });
+    $(".close").click(function(){
+        $(".banDel").hide();
+    });
+    $(".no").click(function(){
+        $(".banDel").hide();
+    });
+</script>
 </html>

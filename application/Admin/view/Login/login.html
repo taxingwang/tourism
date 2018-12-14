@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>Shop登录</title>
+<title>Travler-登录</title>
 <base href="http://www.tours.com/admin/">
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <link rel="stylesheet" type="text/css" href="css/page.css" />
@@ -14,6 +14,7 @@
 	<!-- 登录页面头部 -->
 	<div class="logHead">
 		<img src="img/logLOGO.png" />
+		<img src="img/logYJ.png" />
 	</div>
 	<!-- 登录页面头部结束 -->
 
@@ -50,10 +51,10 @@
 	<!-- 登录body  end -->
 
 	<!-- 登录页面底部 -->
-	<div class="logFoot">
+	<!-- <div class="logFoot">
 		<p class="p1">版权所有：南京设易网络科技有限公司</p>
 		<p class="p2">南京设易网络科技有限公司 登记序号：苏ICP备11003578号-2</p>
-	</div>
+	</div> -->
 	<!-- 登录页面底部end -->
 </body>
 </html>
@@ -72,6 +73,8 @@
 					window.location.href = "{:Url('Index/index')}";
 				}else if(msg==2){
 					alert("用户名不存在")
+				}else if(msg==0){
+					alert("该帐号已冻结，请联系管理员")
 				}else{
 					alert("用户名与密码不匹配")
 				}

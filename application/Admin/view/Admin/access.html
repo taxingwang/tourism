@@ -1,10 +1,68 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>Travler-员工管理</title>
+	<base href="http://www.tours.com/admin/">
+	<link rel="stylesheet" type="text/css" href="css/css.css" />
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<!-- <script type="text/javascript" src="js/page.js" ></script> -->
 </head>
 <body>
-	权限管理
+<div id="pageAll">
+	<div class="pageTop">
+		<div class="page">
+			<img src="img/coin02.png" /><span><a href="index/index" target="_top">>首页</a>&nbsp;-&nbsp;-</span>&nbsp;后台人事管理&nbsp;-&nbsp;-权限管理
+		</div>
+	</div>
+
+	<div class="page">
+		<!-- user页面样式 -->
+		<div class="connoisseur">
+			<div class="conform">
+			</div>
+			<!-- user 表格 显示 -->
+			<div class="conShow">
+				<table border="1" cellspacing="0" cellpadding="0">
+					<tr>
+						<td width="66px" class="tdColor tdC">序号</td>
+						<td width="435px" class="tdColor">角色名称</td>
+						<td width="400px" class="tdColor">权限名称</td>
+						<td width="630px" class="tdColor">最后登录时间</td>
+						<td width="130px" class="tdColor">操作</td>
+					</tr>
+					{volist name='role' id='v'}
+					<tr height="40px" id="tr">
+						<td>{$v.role_id}</td>
+						<td>{$v.role_name}</td>
+						{volist name='array' id='vv'}
+						<?php if(in_array($array['son'])){?>
+						{volist name='vv' id='vvv'}
+						<td></td>
+						{/volist}
+						<?php }else{?>
+						<td></td>
+						<?php }?>
+						{/volist}
+						<td></td>
+						<td></td>
+						<td>
+							<a href="javascript:;" class="upd">
+								<button class="btn">修改权限</button>
+							</a>
+						</td>
+					</tr>
+					{/volist}
+				</table>
+				<div class="paging"></div>
+			</div>
+			<!-- user 表格 显示 end-->
+		</div>
+		<!-- user页面样式end -->
+	</div>
+
+</div>
 </body>
+<script type="text/javascript">
+</script>
 </html>

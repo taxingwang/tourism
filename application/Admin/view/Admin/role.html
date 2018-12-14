@@ -2,18 +2,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>角色管理-有点</title>
+<title>Travler-角色管理</title>
 	<base href="http://www.tours.com/admin/">
 <link rel="stylesheet" type="text/css" href="css/css.css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <!-- <script type="text/javascript" src="js/page.js" ></script> -->
 </head>
 
-<body>
+<body id="body">
 <div id="pageAll">
 <div class="pageTop">
 	<div class="page">
-		<img src="img/coin02.png" /><span><a href="{:url('index/main')}">首页</a>&nbsp;-&nbsp;-</span>&nbsp;后台人事管理&nbsp;-&nbsp;-角色管理
+		<img src="img/coin02.png" /><span><a href="index/index" target="_top">>首页</a>&nbsp;-&nbsp;-</span>&nbsp;后台人事管理&nbsp;-&nbsp;-角色管理
 	</div>
 </div>
 
@@ -33,23 +33,60 @@
 					<td width="66px" class="tdColor tdC">序号</td>
 					<td width="400px" class="tdColor">角色名称</td>
 					<td width="630px" class="tdColor">添加时间</td>
-					<td width="130px" class="tdColor">操作</td>
+					<td width="380px" class="tdColor">状态</td>
+					<td width="380px" class="tdColor">操作</td>
 				</tr>
 				{volist name='rolelist' id='v'}
 				<tr height="40px">
 					<td>{$v.role_id}</td>
-					<td><span class="name">{$v.role_name}</span><input type="text" class="u_name" value="" hidden /></td>
+					<td class="dj" ids="{$v.role_id}" title="点击修改角色名称"><span class="r_name">{$v.role_name}</span><input type="text" hidden name="{$v.role_id}" class="role_name" value="{$v.role_name}"></td>
 					<td>{$v.creat_role_time}</td>
+					<td>{if($v.role_status==1)}
+						<font color="green">已激活</font>
+						{else/}
+						<font color="red">未激活</font>
+						{/if}</td>
 					<td>
-						<a href="javascript:;" class="upd">
-							<img class="operation" src="img/update.png">
-						</a>
-						<img class="operation delban del" src="img/delete.png" id="{$v.role_id}">
+						{if($v.role_status==1)}
+						<img class="operation delban del" src="img/close.png" names="{$v.role_status}" name="{$v.role_id}" title="点击禁用该角色">
+						{else/}
+						<img class="operation delban del" src="img/open.png" names="{$v.role_status}" name="{$v.role_id}" title="点击启用该角色">
+						{/if}
 					</td>
 				</tr>
 				{/volist}
 			</table>
-			<div class="paging"></div>
+			<script>
+			$(document).on("click",".del",function(){
+				var obj = $(this)
+				var role_id = obj.attr("name")
+				var role_status = obj.attr("names")
+				if(role_status==1){
+					var tk = confirm("是否禁用该角色")
+	        	}else{
+	        		var tk = confirm("是否启用该角色")
+	        	}
+	        	if(tk == true){
+					$.ajax({
+						data:{"role_id":role_id,"role_status":role_status},
+						url:"{:Url('Admin/change_RoleStatus')}",
+						type:"post",
+						success:function(msg){
+							if(msg==1){
+								window.location.reload()
+							}else if(msg==3){
+								alert("该角色下还有用户，无法执行该操作")
+							}else{
+								alert("出错了！！！")
+							}
+						}
+					})
+	        	}else{
+	        		return false
+	        	}
+			})
+			</script>
+			<div class="paging" style="width:1200px;height:150px;"></div>
 		</div>
 		<!-- user 表格 显示 end-->
 	</div>
@@ -59,30 +96,14 @@
 </body>
 
 <script type="text/javascript">
-	//角色删除
-	$('.del').click(function () {
-        var tk = confirm("是否删除该角色");
-        if(tk == false){
-            return false;
-		}else{
-            var role_id = $(this).attr('id');
-            $.ajax({
-                type: "POST",
-                url: "{:url('admin/role_del')}",
-                data: {role_id:role_id},
-                success: function(msg){
-					if(msg == 0){
-					    alert('删除成功');
-                        window.location.href="{:url('admin/role')}"
-					}else {
-					    alert('删除失败');
-					}
-                }
-            });
-		}
-    });
-	//角色添加
-	$('.tj').click(function () {
+
+$(".paging").click(function(){
+	$(".r_name").show()
+	$(".role_name").hide()
+})
+
+//角色添加
+$('.tj').click(function () {
 		var role_name = $('input[name=role_name]').val();
         $.ajax({
             type: "POST",
@@ -92,29 +113,52 @@
 				if(msg == 0){
 				    alert('角色名不能为空');
 				}else if(msg == 1){
-				    alert('添加成功');
                     window.location.href="{:url('admin/role')}"
 				}else if(msg == 2){
 				    alert('添加失败');
-                    window.location.href="{:url('admin/role')}"
+				}else if(msg == 3){
+                    alert('该角色已经存在');
 				}
             }
         });
     });
-// 广告弹出框
-$(".delban").click(function(){
-  $(".banDel").show();
-});
-$(".close").click(function(){
-  $(".banDel").hide();
-});
-$(".no").click(function(){
-  $(".banDel").hide();
-});
-// 广告弹出框 end
-$(document).on("click",".upd",function(){
-	$(".name").hide()
-	$(".u_name").show()
-});
+    $('.r_name').on('click', function() {
+		$(this).hide();
+		$(this).next().show();
+
+		$(".role_name").on("blur",function(){
+		    var role_name = $(this).val();
+			var role_id = $(this).attr("name");
+			$.ajax({
+				data:{"role_name":role_name,"role_id":role_id},
+				type:"post",
+				url:"{:Url('Admin/role_save')}",
+				success:function(msg){
+					if(msg==1){
+					    window.location.reload()
+					}else{
+                        window.location.reload()
+					}
+				}
+			})
+		})
+
+    });
+
+// // 广告弹出框
+// $(".delban").click(function(){
+//   $(".banDel").show();
+// });
+// $(".close").click(function(){
+//   $(".banDel").hide();
+// });
+// $(".no").click(function(){
+//   $(".banDel").hide();
+// });
+// // 广告弹出框 end
+// $(document).on("click",".upd",function(){
+// 	$(".name").hide()
+// 	$(".u_name").show()
+// });
 </script>
 </html>

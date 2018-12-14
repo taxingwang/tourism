@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Travler-角色管理</title>
+	<base href="http://www.tours.com/admin/">
+<link rel="stylesheet" type="text/css" href="css/css.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="js/page.js" ></script> -->
+</head>
+<style>
+.pagination{text-align:center;margin-top:20px;margin-bottom: 20px;}
+.pagination li{margin:0px 10px; border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;}
+.pagination .active{background-color:#4169E1;color: #fff;}
+.pagination .disabled{color:#4169E1;}
+.button {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 4px;
+  cursor: pointer;
+  text-align: center;   
+  text-decoration: none;
+  outline: none;
+  color: #fff;
+  background-color: #4169E1;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color:#0000FF}
+
+.button:active {
+  background-color: #3e8e41;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
+}
+</style>
+<body>
+<div id="pageAll">
+<div class="pageTop">
+	<div class="page">
+		<img src="img/coin02.png" /><span><a href="index/index" target="_top">>首页</a>&nbsp;-&nbsp;-</span>&nbsp;后台人事管理&nbsp;-&nbsp;-角色管理
+	</div>
+</div>
+
+<div class="page">
+	<!-- user页面样式 -->
+	<div class="connoisseur">
+		<div class="conform">
+				<div class="cfD">
+					<input class="userinput" id="access_name" type="text" placeholder="输入权限名称" name="access_name"/>
+					<input class="userinput" id="functions" type="text" placeholder="输入权限方法名称" name="functions"/>
+					<select name="parent_id" id="parent_id">
+						<option value="0">无</option>
+						{volist name='parent' id='v'}
+						<option value="{$v.access_id}">{$v.access_name}</option>
+						{/volist}
+					</select>
+					<input type="radio" class="" name="access_status" value="1" checked/>启用
+					<input type="radio" class="" name="access_status" value="0"/>禁用
+					<button class="userbtn tj" id="access_add">添加权限</button>
+				</div>
+		</div>
+		<script>
+		$(document).on("click","#access_add",function(){
+			var access_name = $("#access_name").val()
+			var functions = $("#functions").val()
+			var parent_id = $("#parent_id").val()
+			var access_status = $('input[name="access_status"]:checked').val()
+			if(access_name==""||functions==""){
+				alert("权限名称、权限方法名称不能为空")
+				return false
+			}
+			$.ajax({
+				data:{"access_name":access_name,"functions":functions,"parent_id":parent_id,"access_status":access_status},
+				url:"{:Url('Admin/access_add_do')}",
+				type:"post",
+				success:function(msg){
+					if(msg==1){
+						window.location.reload()
+					}else if(msg==2){
+						alert("权限名称或权限方法名称已存在")
+					}else{
+						alert("出错啦！！！")
+					}
+				}
+			})
+		})
+		</script>
+		<!-- user 表格 显示 -->
+		<div class="conShow">
+			<table border="1" cellspacing="0" cellpadding="0">
+				<tr>
+					<td width="66px" class="tdColor tdC">序号</td>
+					<td width="400px" class="tdColor">权限名称</td>
+					<td width="630px" class="tdColor">添加时间</td>
+					<td width="630px" class="tdColor">状态</td>
+					<td width="130px" class="tdColor">操作</td>
+				</tr>
+				{volist name='access' id='v'}
+				<tr height="40px">
+					<td>{$v.access_id}</td>
+					
+					<td class="dj" ids=""><span class="r_name">{$v.access_name}</span><input type="text" hidden name="" class="role_name" value=""></td>
+					<td>{$v.creat_access_time}</td>
+					<td>{if($v.access_status==1)}<font color="green">已激活</font>
+						{else/}
+						<font color="red">未激活</font>{/if}</td>
+					<td>{if($v.access_status==1)}<button class="button" value="{$v.access_id}" name="{$v.access_status}">禁用权限</button>
+						{else/}
+						<button class="button" value="{$v.access_id}" name="{$v.access_status}">启用权限</button>
+						{/if}</td>
+				</tr>
+				{/volist}
+			</table>
+			<div class="paging">{$access->render()}</div>
+		</div>
+		<!-- user 表格 显示 end-->
+	</div>
+	<!-- user页面样式end -->
+</div>
+</div>
+</body>
+
+<script type="text/javascript">
+$(document).on("click",".button",function(){
+	var access_id = $(this).val()
+	var access_status  = $(this).attr("name")
+	$.ajax({
+		data:{"access_id":access_id,"access_status":access_status},
+		type:"post",
+		url:"{:Url('Admin/change_access_status')}",
+		success:function(msg){
+			if(msg==1){
+				window.location.reload()
+			}else if(msg==2){
+				alert("该权限下还有子权限在启用中，无法禁用")
+			}else{
+				alert("出错啦！！！")
+			}
+		}
+	})
+})
+</script>
+</html>

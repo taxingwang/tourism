@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Travler-修改密码</title>
+<base href="http://www.tours.com/admin/">
+<link rel="stylesheet" type="text/css" href="css/css.css" />
+<script type="text/javascript" src="js/jquery.min.js"></script>
+</head>
+<body>
+	<div id="pageAll">
+		<div class="pageTop">
+			<div class="page">
+				<img src="img/coin02.png" /><span><a href="Index/index" target="_top">首页</a>&nbsp;-&nbsp;<a
+					href="#">系统管理</a>&nbsp;-</span>&nbsp;修改密码
+			</div>
+		</div>
+		<div class="page ">
+			<!-- 上传广告页面样式 -->
+			<div class="banneradd bor">
+				<div class="baTop">
+					<span>修改密码</span>
+				</div>
+				<div class="baBody">
+					<div class="bbD">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;帐号&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$admin}
+					</div>
+					<div class="bbD">
+						&nbsp;&nbsp;原密码&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" id="pwd" class="input1" name="spot_name" placeholder="请输入原密码"/><span id="pwd_span"></span>
+					</div>
+					<div class="bbD">
+						&nbsp;&nbsp;新密码&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="password" class="input1" name="new_pwd" id="new_pwd" placeholder="输入新密码"/>
+					</div>
+					
+					<div class="bbD">
+						确认新密码<input type="password" name="new_pwd2" id="new_pwd2" class="input1" placeholder="再次输入新密码"/><span id="new_pwd2_span"></span>
+					</div>
+					<div class="bbD">
+						<p class="bbDP">
+							<button class="btn_ok btn_yes" href="#" id="submit">提交</button>
+							<a class="btn_ok btn_no"  target="_top" href="Index/index">取消</a>
+						</p>
+					</div>
+				</div>
+			</div>
+
+			<!-- 上传广告页面样式end -->
+		</div>
+	</div>
+</body>
+</html>
+<script>
+var old_status=0;
+var new_status=0;
+$(document).on("blur","#pwd",function(){
+	var pwd = $("#pwd").val()
+	
+	$("#pwd_span").empty()
+	$.ajax({
+			data:{"pwd":pwd},
+			type:"post",
+			url:"{:Url('Login/pwd_check')}",
+			success:function(msg){
+				if(msg==1){
+					var str = "<font color='green'>&nbsp;&nbsp;&nbsp;✔</font>";
+					old_status=1;
+					$("#pwd_span").append(str)
+				}else{
+					var str = "<font color='red'>&nbsp;&nbsp;&nbsp;✖</font>";
+					$("#pwd_span").append(str)
+				}
+			}
+		})
+})
+$(document).on("blur","#new_pwd2",function(){
+	var new_pwd = $("#new_pwd").val()
+	var new_pwd2 = $("#new_pwd2").val()
+	$("#new_pwd2_span").empty()
+	if(new_pwd2!=new_pwd){
+		var str = "<font color='red'>&nbsp;&nbsp;&nbsp;✖</font>";
+		$("#new_pwd2_span").append(str)
+	}else{
+		var str = "<font color='green'>&nbsp;&nbsp;&nbsp;✔</font>";
+		new_status=1;
+		$("#new_pwd2_span").append(str)
+	}
+})
+$(document).on("click","#submit",function(){
+	if(old_status==0){
+		alert("原密码不正确")
+		return false;
+	}else if(new_status==0){
+		alert("两次密码验证出错")
+		return false;
+	}else{
+		var new_pwd = $("#new_pwd").val()
+		var admin_pwd = $("#pwd").val()
+		$.ajax({
+			data:{"new_pwd":new_pwd,"admin_pwd":admin_pwd},
+			type:"post",
+			url:"{:Url('Login/change_pwd_do')}",
+			success:function(msg){
+				if(msg==1){
+					alert("修改成功")
+				}else{
+					alert("出错啦")
+				}
+			}
+		})
+	}
+})
+
+</script>

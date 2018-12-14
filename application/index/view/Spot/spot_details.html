@@ -1,0 +1,209 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="order by dede58.com/" />
+<title>Traveler-景点详情</title>
+    <base href="http://www.tours.com/">
+<meta content="Traveler" name="keywords" />
+<meta content="Traveler" name="description" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/lightbox.css" rel="stylesheet" type="text/css" />
+<link href="css/zhuce.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/lrtk.js"></script>
+<script type="text/javascript" src="js/lightbox.js"></script>
+<script type="text/javascript" src="js/jquery.superslide.2.1.1.js"></script>
+</head>
+<body>
+<div class="top_box">
+    <div class="top_nav">
+        <div class="top_left"><font color="red">欢迎来到Traveler官方网站，我们竭诚为您服务！</font></div>
+       <div class="top_right">
+      {if(empty($username))}
+        <div class="login">
+            <a href="{:url('login/login')}">登录</a></div>
+      <div class="regist">
+        <ul>
+          <li><a href="{:url('login/register')}">免费注册</a></li>
+        </ul>
+      </div>
+        {else/}
+        <div class="login"><a><font color="red" id="user" style="font-size:15px;">{$username}</font></a></div>
+            <div class="regist">
+                <ul><li><a href="{:Url('Index/go_out')}"><font color="black">退出</font></a></li></ul>
+            </div>
+        
+        {/if}
+
+    </div>
+    </div>
+</div>
+
+<div class="header">
+	<div class="logo"><a href="#"><img src="images/logo.png" width="194" height="55" /></a></div>
+    <div class="logo01"><a href="#"><img src="images/logo_01.png" width="368" height="40" /></a></div>
+    <div class="logo02"><a href="#"><img src="images/logo_02.png" width="387" height="45" /></a></div>
+</div>
+
+<div class="top_menus">
+    <div class="menus">
+        <ul>
+            <li><a href="{:url('Index/index')}" title="首页">首页</a></li>
+            <li><a href="{:url('Order/order_list')}" title="我的订单">我的订单</a></li>
+            <li><a href="{:url('News/new_list')}" title="新闻动态">新闻动态</a></li>
+            <li><a href="{:url('Line/line')}" title="精选线路">精选线路</a></li>
+            <li style="background-color:red;"><a href="{:url('Spot/spot')}" title="景点专列">景点专列</a></li>
+            <li><a href="{:url('Comment/comment')}" title="查看评论">查看评论</a></li>
+            <li><a href="{:url('Collection/my_collection')}" title="我的收藏">我的收藏</a></li>
+        </ul>
+    </div>
+
+<form action="{:url('Line/search')}" method="post">
+            <dl class="top_search">
+                <dt><input type="text"placeholder="成百上千旅游路线，总有一款适合您！" name="title" class="input_text" /></dt>
+                <dd><input type="image" class="input_image" src="images/dd_bg.png" /></dd>
+            </dl>
+        </form>
+</div>
+
+<div class="main">
+
+<!--tag标题-->
+<div id="menu03">
+<div class="paishe_bt">
+<h1>精选线路</h1>
+<ul id="nav03">
+      <li class="selectall"> <a href="javascript:void(0)" onclick="selectTag('tagContent0',this)">景点专列</a></li>
+</ul>
+</div>
+<div class="paishe_catpos">当前位置：<a href="{:url('Spot/spot')}" title="首页">景点专列</a> > <a href="">景点详情</a> ></div>
+</div>
+
+<!--二级菜单-->
+    <div id="menu_con04">
+    
+       <div style="display: block;" class="tagContent01" id="tagContent0">
+       
+       <div class="album">
+       <div class="img"><img src="images/tuijian.png" width="126" height="103" /></div>
+		<div class="hd">
+            {volist name='imgs' id='v'}
+			<ul>
+				<li><img src="/admin/{$v.spot_images}" id="{$v.id}" class="tp"></li>
+            </ul>
+            {/volist}
+		</div>
+        
+		<div class="bd">
+            {volist name='imgs' id='v'}
+            <ul>
+                <li class="imgs"><img src="/admin/{$v.spot_images}"></li>
+            </ul>
+            {/volist}
+    </div>
+<script>
+    $('.tp').mouseover(function () {
+        var id = $(this).attr('id');
+        var spot_id = $(".spot_id").val()
+        $.ajax({
+            data:{"id":id,"spot_id":spot_id},
+            url:"{:Url('Spot/get_spot_img')}",
+            type:"post",
+            success:function(msg){
+                var data = eval(msg)
+                $(".imgs").empty()
+                var img = "<img src=/admin/"+data[0]+">"
+                $(".imgs").append(img)
+            }
+        })
+    })
+</script>
+</div>
+
+
+<div class="basic_info">
+    <input type="hidden" class="spot_id" value="{$spot.spot_id}" />
+	<div class="one">{$spot.spot_name}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+        {if($spot.spot_point gt 6)}
+        <font color="red" style="font-size:36px;font-family:华文行楷;">{$spot.spot_point}</font>
+        {else/}
+        <font color="green" style="font-size:36px;font-family:华文行楷;">{$spot.spot_point}</font>
+        {/if}
+        分&nbsp&nbsp&nbsp<button class="com" name="{$spot.spot_id}" style="width:50px;">评分</button></div>
+    <div class="two">{$type.spot_message}</div>
+        <dl>
+            <dt>景点类别：</dt>
+            <dd>{$type.class_name}</dd>
+       </dl>
+       <dl>
+			<dt>浏览次数：</dt>
+			<dd>{$spot.click_num}</dd>
+		</dl>
+    {/volist}
+
+</div>
+</div>
+<script>
+    $(document).on("click",".com",function(){
+        var spot_id = $(this).attr("name")
+        var points=prompt("输入你对该景点的评分","输入1-10的整数");
+        var aa = /^([1-9]|10)$/;
+        if(points == null || points == "") {
+            return false
+        }else{
+            if(!aa.test(points)) {
+                alert("只能是1-10的整数")
+                return false;
+                
+            } else {
+                $.ajax({
+                    data:{"points":points,"spot_id":spot_id},
+                    url:"{:Url('Spot/spot_point')}",
+                    type:"post",
+                    success:function(msg){
+                        if(msg==1){
+                            alert("评分成功")
+                            window.location.reload()
+                        }else if(msg==0){
+                            alert("出错了！！！")
+                        }else if(msg==3){
+                            alert("您已经对该景点评过分了")
+                        }else{
+                            alert("您还没有登录，请先登录")
+                            location.href="http://www.tours.com/index/login/login";
+                        }
+                    }
+                })
+            }
+        }
+    })
+</script>
+
+
+<div class="clear"></div>
+</div>
+<div class="footer">
+	<ul>
+    	<li><a href="#">关于我们</a></li>
+        <li><a href="#">联系我们</a></li>
+        <li><a href="#">员工风采</a></li>
+        <li><a href="#">网站地图</a></li>
+        <li><a href="#">帮助中心</a></li>
+        <li><a href="#">友情链接</a></li>
+    </ul>
+</div>
+
+<div class="foot">
+山东家天下国际旅行社有限公司 旅游经营许可证：L-SD-01260<br/>
+山东交运旅游集团济南家天下分公司 旅游经营许可证号：L-SD-CJ00010 <br/>
+Copyright © 2016-2020 山东家天下国际旅行社有限公司 版权所有　管理备案号：鲁ICP备10202078号-2<br/>
+旅游局投诉电话：<span>12301</span>&nbsp;&nbsp;技术支持：<a href="http://www.jnyunchang.com/">云畅网络</a>
+<ul>
+	<li><img src="images/copyright01.jpg" width="103" height="32" alt="经营性网站 备案信息" /></li>
+    <li><img src="images/copyright02.jpg" width="103" height="32" alt="可信网站 信用评价" /></li>
+    <li><img src="images/copyright03.jpg" width="103" height="32" alt="可信网站 信用评价" /></li>
+</ul>
+</div>
+</body>
+</html>

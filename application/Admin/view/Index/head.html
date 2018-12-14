@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>头部-有点</title>
+<title>Travler-头部</title>
 <base href="http://www.tours.com/admin/">
 <link rel="stylesheet" type="text/css" href="css/public.css" />
 <script type="text/javascript" src="js/jquery.min.js"></script>
@@ -17,11 +17,11 @@
 		</div>
 		<div class="headR">
 			<p class="p1">
-				欢迎，<font color="black">{$accounts}</font>
+				欢迎&nbsp;&nbsp;<font color="write" style="font-size:18px;" title="{$role_name}">{$accounts}</font>&nbsp;&nbsp; <a class="goOut" id="go_out" target="_top" href="{:Url('Login/go_out')}">退出</a>
 			</p>
 			<p class="p2">
-				<a href="{:Url('Login/resetpwd')}" class="resetPWD">重置密码</a>&nbsp;&nbsp;
-				<a href="javascript:;" class="goOut" id="go_out">退出</a>
+				<!-- <a href="{:Url('Login/resetpwd')}" class="resetPWD">重置密码</a>-->
+				
 			</p>
 		</div>
 		<!-- onclick="{if(confirm(&quot;确定退出吗&quot;)){return true;}return false;}" -->
@@ -41,17 +41,4 @@
 </body>
 </html>
 <script>
-	$(document).on("click","#go_out",function(){
-		if(confirm("确定退出当前用户？")){
-			$.ajax({
-			data:{},
-			url:"{:Url('Login/go_out')}",
-			type:"post",
-			success:function(msg){
-				localtion.reload();
-			}
-		})
-		}else{
-		}
-	})
 </script>

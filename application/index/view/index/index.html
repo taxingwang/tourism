@@ -1,307 +1,169 @@
-<!DOCTYPE html>
-<html lang="en">
-		 <head>
-		 <title>Home</title>
-		 <meta charset="utf-8">
-		 <link rel="icon" href="http://www.tours.com/images/favicon.ico">
-		 <link rel="shortcut icon" href="http://www.tours.com/images/favicon.ico" />
-		 <link rel="stylesheet" href="http://www.tours.com/css/style.css">
-		 <link rel="stylesheet" href="http://www.tours.com/css/slider.css">
-		 <script src="http://www.tours.com/js/jquery.js"></script>
-		 <script src="http://www.tours.com/js/jquery-migrate-1.1.1.js"></script>
-		 <script src="http://www.tours.com/js/superfish.js"></script>
-		 <script src="http://www.tours.com/js/sForm.js"></script>
-		 <script src="http://www.tours.com/js/jquery.jqtransform.js"></script>
-		 <script src="http://www.tours.com/js/jquery.equalheights.js"></script>
-		 <script src="http://www.tours.com/js/jquery.easing.1.3.js"></script>
-		 <script src="http://www.tours.com/js/tms-0.4.1.js"></script>
-		<script src="http://www.tours.com/js/jquery-ui-1.10.3.custom.min.js"></script>
-		 <script src="http://www.tours.com/js/jquery.ui.totop.js"></script>
-		 <script>
-			$(window).load(function(){
-			$('.slider')._TMS({
-							show:0,
-							pauseOnHover:false,
-							prevBu:'.prev',
-							nextBu:'.next',
-							playBu:false,
-							duration:800,
-							preset:'random', 
-							pagination:false,//'.pagination',true,'<ul></ul>'
-							pagNums:false,
-							slideshow:8000,
-							numStatus:false,
-							banners:true,
-					waitBannerAnimation:false,
-				progressBar:false
-			})	;
-			 $( "#tabs" ).tabs();
-		 
-		$().UItoTop({ easingType: 'easeOutQuart' });
-			});
-			
-			
-			
-		 </script>
-		 <!--[if lt IE 8]>
-			 <div style=' clear: both; text-align:center; position: relative;'>
-				 <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
-					 <img src="http://storage.ie6countdown.com/assets/100/images/banners/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today." />
-				 </a>
-			</div>
-		<![endif]-->
-		<!--[if lt IE 9]>
-			<script src="js/html5shiv.js"></script>
-			<link rel="stylesheet" media="screen" href="css/ie.css">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="order by dede58.com/" />
+<title>Traveler-首页</title>
+    <base href="http://www.tours.com/">
+<meta content="Traveler" name="keywords" />
+<meta content="Traveler" name="description" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/lightbox.css" rel="stylesheet" type="text/css" />
+<link href="css/zhuce.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/lrtk.js"></script>
+<script type="text/javascript" src="js/lightbox.js"></script>
+<script type="text/javascript" src="js/jquery.superslide.2.1.1.js"></script>
+</head>
+<body>
+<div class="top_box">
+  <div class="top_nav">
+    <div class="top_left"><font color="red">欢迎来到Traveler官方网站，我们竭诚为您服务！</font></div>
 
-		<![endif]-->
-		 </head>
-		 <body	class="page1">
-<!--==============================header=================================-->
- <header> 
-	<div class="container_12">
-		<div class="grid_12"> 
-		<h1><a href="index.html"><img src="http://www.tours.com/images/logo.png" alt="Gerald Harris attorney at law"></a> </h1>
-					
-				 
-		  <div class="clear"></div>
-			</div>
-<div class="menu_block">
-					 <nav	class="" >
-						<ul class="sf-menu">
-									 <li class="current"><a href="{:Url('index/index')}">首页</a></li>
-									 <li class="with_ul"><a href="{:Url('index/about')}">关于</a>
-										 <ul>
-												<li><a href="#">机构</a></li>
-												<li><a href="#">消息</a></li>
-												<li><a href="#">团队</a></li>
-										 </ul>
-									 </li>
-									 <li><a href="{:Url('index/gallery')}">画廊</a></li>
-									 <li><a href="{:Url('index/tours')}">旅游</a></li>
-									 <li><a href="{:Url('index/blog')}">博客</a></li>
-									 <li><a href="{:Url('index/contacts')}">往来</a></li>
-								 </ul>
-							</nav>
-					 <div class="clear"></div>
-					 </div>
-					 <div class="clear"></div>
+    <div class="top_right">
+      {if(empty($username))}
+        <div class="login">
+            <a href="{:url('login/login')}">登录</a></div>
+      <div class="regist">
+        <ul>
+          <li><a href="{:url('login/register')}">免费注册</a></li>
+        </ul>
+      </div>
+        {else/}
+        <div class="login"><a><font color="red" id="user" style="font-size:15px;">{$username}</font></a></div>
+            <div class="regist">
+                <ul><li><a href="{:Url('Index/go_out')}"><font color="black">退出</font></a></li></ul>
+            </div>
+        
+        {/if}
+
+    </div>
+  </div>
+</div>
+
+<div class="header">
+    <div class="logo"><a href="javascript:void(0)"><img src="images/logo.png" width="194" height="55" /></a></div>
+    <div class="logo01"><a href="javascript:void(0)"><img src="images/logo_01.png" width="368" height="40" /></a></div>
+    <div class="logo02"><a href="javascript:void(0)"><img src="images/logo_02.png" width="387" height="45" /></a></div>
+</div>
+
+<div class="top_menus">
+<div class="menus">
+    <ul>
+        <li style="background-color:red;"><a href="{:url('Index/index')}" title="首页">首页</a></li>
+        <li><a href="{:url('Order/order_list')}" title="我的订单">我的订单</a></li>
+        <li><a href="{:url('News/new_list')}" title="新闻动态">新闻动态</a></li>
+        <li><a href="{:url('Line/line')}" title="精选线路">精选线路</a></li>
+        <li><a href="{:url('Spot/spot')}" title="景点专列">景点专列</a></li>
+        <li><a href="{:url('Comment/comment')}" title="查看评论">查看评论</a></li>
+        <li><a href="{:url('Collection/my_collection')}" title="我的收藏">我的收藏</a></li>
+    </ul>
+</div>
+
+      <form action="{:url('Line/search')}" method="post">
+        	<dl class="top_search">
+            	<dt><input type="text"placeholder="成百上千旅游路线，总有一款适合您！" name="title" class="input_text" /></dt>
+                <dd><input type="image" class="input_image" src="images/dd_bg.png" /></dd>
+            </dl>
+        </form>
+</div>
+
+<div class="banner">
+<div class="focus">
+    <ul class="rslides f426x240">
+         <li><a href="#" target="_blank"><img src="images/banner.jpg" /></a></li>
+        <li><a href="#" target="_blank"><img src="images/banner1.jpg" /></a></li>
+        <li><a href="#" target="_blank"><img src="images/banner2.jpg" /></a></li>
+    </ul>
+</div>
+</div>
+
+<div class="tourism">
+	<div class="tourism_left">
+      <div id="menu01"><span><a href="{:url('Spot/spot')}">+更多</a></span>
+<!--tag标题-->
+    <ul id="nav01">
+			<li><a href="javascript:void(0)" title="旅游行列" class="selected">旅游行列</a></li>
+    </ul>
+</div>
+ <div class="img-scroll">
+      <div class="next1"><img src="images/left.png" width="40" height="70"></div>
+      <div class="prev1"><img src="images/right.png" width="40" height="70"></div>
+      <div class="img-list">
+          {volist name='routelist' id='v'}
+        <ul>
+          <li>
+            <dl>
+              <dd><a href="#" title="{$v.route_imgs}"><img src="/admin/{$v.route_imgs}" width="300" height="430"/></a></dd>
+            </dl>
+          </li>
+        </ul>
+          {/volist}
+      </div>
+      <script type="text/javascript" src="js/gun.js"></script>
+    </div>
+    
+<!--二级菜单-->
+    <div id="menu_con">
+		{volist name='indexlist' id='v'}
+					<div class="tag" style="display:block">
+						<ul>
+							  <li>
+									<a href="{:url('Spot/spot_details')}?id={$v.spot_id}" title="{$v.spot_name}"><img src="/admin/{$v.spot_images}" alt="{$v.spot_images}" /></a>
+									<span><a href="{:url('Spot/spot_details')}?id={$v.spot_id}" title="{$v.spot_name}">{$v.spot_name}</a></span>
+								</li>
+						 </ul>
 					</div>
-</header>
-<div class="copyrights">Collect from <a href="http://www.cssmoban.com/" >Website Template</a></div>
+		{/volist}
+        <div class="clear"></div>
+</div>
+<script type=text/javascript src="js/home.js"></script>
+</div>
 
-<div class="main">
-	<div class="container_12">
-		<div class="grid_12">
-	 <div class="slider-relative">
-			<div class="slider-block">
-				<div class="slider">
-					<a href="#" class="prev"></a><a href="#" class="next"></a>
-					<ul class="items">
-						<li><img src="http://www.tours.com/images/slide.jpg" alt="">
-								<div class="banner">
-									<div>这里有很多地方</div><br>
-									<span>值得一看</span>
-								</div>
-						</li>
-						<li><img src="http://www.tours.com/images/slide1.jpg" alt=""></li>
-						<li><img src="http://www.tours.com/images/slide2.jpg" alt=""></li>
-						<li><img src="http://www.tours.com/images/slide3.jpg" alt=""></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div></div>
-	
-<!--=======content================================-->
+    <div class="tourism_right">
+    	<div class="tour_ti"><img src="images/list.jpg" width="240" height="60" /></div>
+        <div class="tour_li">
+			{volist name='routelist' id='v'}
+        	<ul>
+            	<li> 
+                <a href="{:url('Line/line')}?id={$v.route_id}"><img class="pr_img" src="/admin/{$v.route_imgs}" width="100" height="80" /></a>
+                <span class="pr1"><a href="#" title="{$v.route_name}">{$v.route_name}</a></span>
+                <span class="time">￥{$v.money}元</span>
+                <span class="pr2"><a href="{:url('Line/line')}?id={$v.route_id}">查看详情</a></span>
+                 <div class="clear"></div>
+                </li>
+            </ul>
+			{/volist}
+        </div>
 
-<div class="content"><div class="ic">More Website Templates @ TemplateMonster.com - August 05, 2013!</div>
-	<div class="container_12">
-		<div class="grid_12">
-			<h3>热门的目的地</h3>
-		</div>
-		<div class="boxes">
-		<div class="grid_4">
-					<figure>
-						<div><img src="http://www.tours.com/images/page1_img1.jpg" alt=""></div>
-				  <figcaption>
-							<h3>Venice</h3>
-							Lorem ipsum dolor site geril amet, consectetur cing eliti. Suspendisse nulla leo mew dignissim eu velite a rew qw vehicula lacinia arcufasec ro. Aenean lacinia ucibusy fase tortor ut feugiat. Rabi tur oliti aliquam bibendum olor quis malesuadivamu.
-							<a href="" class="btn">Details</a>						</figcaption>
-					</figure>
-				</div>
-				<div class="grid_4">
-					<figure>
-						<div><img src="http://www.tours.com/images/page1_img2.jpg" alt=""></div>
-				  <figcaption>
-							<h3>New York</h3>
-							Psum dolor sit ametylo gerto consectetur ertori hykill holit adipiscing lity. Donecto rtopil osueremo	kollit asec emmodem geteq tiloli. Aliquam dapibus neclol nami wertoli elittro eget vulpoli no
-utaterbil congue turpis in su.
-							<a href="" class="btn">Details</a>						</figcaption>
-					</figure>
-				</div>
-				<div class="grid_4">
-					<figure>
-						<div><img src="http://www.tours.com/images/page1_img3.jpg" alt=""></div>
-				  <figcaption>
-							<h3>Paris</h3>
-							 Lorem ipsum dolor site geril amet, consectetur cing eliti. Suspendisse nulla leo mew dignissim eu velite a rew qw vehicula lacinia arcufasec ro. Aenean lacinia ucibusy fase tortor ut feugiat. Rabi tur oliti aliquam bibendum olor quis malesuadivamu.
-							<a href="" class="btn">Details</a>						</figcaption>
-					</figure>
-				</div>
-				<div class="clear"></div>
-				</div>
-				<div class="grid_8">
-					 <div id="tabs">
-	<ul>
-		<li><a href="#tabs-1">last Minute</a></li>
-		<li><a href="#tabs-2">hot Deals</a></li>
-		<li><a href="#tabs-3">All-Inclusive</a></li>
-	</ul>
+    </div>
+    
 	<div class="clear"></div>
-	<div class="tab_cont" id="tabs-1">
-		<img src="http://www.tours.com/images/page1_img4.jpg" alt="">
-		<div class="extra_wrapper">
-			<div class="text1">Rem psum dr sit amet. </div>
-			<p class="style1"><a class="col2" href="http://www.cssmoban.com/" rel="nofollow">Click here</a> for more info about this free website template created by TemplateMonster.com </p>
-			
-Nulla facilisi. Ut ut tincidunt lacus, ut auctor libero. Duis ommodo vel ipsum sed volutpat. Phasellus a sagittis dui, eu adipiscinget nisiestibulum eutro.
-<a href="#" class="btn">Details</a>
-<div class="clear "></div>
-
-		</div>
-		<div class="clear cl1"></div>
-		<img src="http://www.tours.com/images/page1_img5.jpg" alt="">
-		<div class="extra_wrapper">
-			<div class="text1 tx1">Hem psuf abr sit dmety. </div>
-			Julla facilisi. Ut ut tincidunt lacus, ut auctor libero. Fuis ommodo vel ipsum sed volutpat. Phasellus a sagittis dui, eu adipiscinget nisi. Vestibulum eu eleifend metus, ut ornare nibh. Vestibulumul tincidunt interdum libero vitae faucibus. Gonec dapibus feugiate auctor. In ac dapibus lacus. Maecenas in pharetra mim asellus a sagittis dui, eu adipiscinget nisi. 
-			<div class="clear"></div>
-			<a href="#" class="btn bt1">Details</a>
-			<div class="clear "></div>
-
-		</div>		
-	</div>
-	<div class="tab_cont" id="tabs-2">
-<img src="http://www.tours.com/images/page1_img4.jpg" alt="">
-		<div class="extra_wrapper">
-			<div class="text1">Rem psum dr sit amet. </div>
-			<p class="style1">Nulla facilisi. Ut ut tincidunt lacus, ut auctor libero. Duis ommodo vel ipsum sed volutpat. Phasellus a sagittis dui, eu adipiscinget nisiestibulum eutro.</p>
-			
-Nulla facilisi. Ut ut tincidunt lacus, ut auctor libero. Duis ommodo vel ipsum sed volutpat. Phasellus a sagittis dui, eu adipiscinget nisiestibulum eutro.
-<a href="#" class="btn">Details</a>
-<div class="clear "></div>
-
-		</div>
-		<div class="clear cl1"></div>
-		<img src="http://www.tours.com/images/page1_img5.jpg" alt="">
-		<div class="extra_wrapper">
-			<div class="text1 tx1">Hem psuf abr sit dmety. </div>
-			Julla facilisi. Ut ut tincidunt lacus, ut auctor libero. Fuis ommodo vel ipsum sed volutpat. Phasellus a sagittis dui, eu adipiscinget nisi. Vestibulum eu eleifend metus, ut ornare nibh. Vestibulumul tincidunt interdum libero vitae faucibus. Gonec dapibus feugiate auctor. In ac dapibus lacus. Maecenas in pharetra mim asellus a sagittis dui, eu adipiscinget nisi. 
-			<div class="clear"></div>
-			<a href="#" class="btn bt1">Details</a>
-			<div class="clear "></div>
-
-		</div>
-	</div>
- <div class="tab_cont" id="tabs-3">
- 
-<img src="http://www.tours.com/images/page1_img4.jpg" alt="">
-		<div class="extra_wrapper">
-			<div class="text1">Rem psum dr sit amet. </div>
-			<p class="style1">Nulla facilisi. Ut ut tincidunt lacus, ut auctor libero. Duis ommodo vel ipsum sed volutpat. Phasellus a sagittis dui, eu adipiscinget nisiestibulum eutro.</p>
-			
-Nulla facilisi. Ut ut tincidunt lacus, ut auctor libero. Duis ommodo vel ipsum sed volutpat. Phasellus a sagittis dui, eu adipiscinget nisiestibulum eutro.
-<a href="#" class="btn">Details</a>
-<div class="clear "></div>
-
-		</div>
-		<div class="clear cl1"></div>
-		<img src="http://www.tours.com/images/page1_img5.jpg" alt="">
-		<div class="extra_wrapper">
-			<div class="text1 tx1">Hem psuf abr sit dmety. </div>
-			Julla facilisi. Ut ut tincidunt lacus, ut auctor libero. Fuis ommodo vel ipsum sed volutpat. Phasellus a sagittis dui, eu adipiscinget nisi. Vestibulum eu eleifend metus, ut ornare nibh. Vestibulumul tincidunt interdum libero vitae faucibus. Gonec dapibus feugiate auctor. In ac dapibus lacus. Maecenas in pharetra mim asellus a sagittis dui, eu adipiscinget nisi. 
-			<div class="clear"></div>
-			<a href="#" class="btn bt1">Details</a>
-			<div class="clear "></div>
-
-		</div>	
-		
-	</div>
 </div>
-		</div>
-	
-	<div class="grid_4">
-	 <div class="newsletter_title">NewsLetter </div>
-	 <div class="n_container">
-			 <form id="newsletter">
-									<div class="success">Your subscribe request has been sent!</div>
-									<div class="text1">Sign up to receive our newsletters </div>
-									<label class="email">
-											 <input type="email" value="email address" >
-												<span class="error">*This is not a valid email address.</span>
-									</label> 
-									<div class="clear"></div> <a href="#" class="" data-type="submit"></a> 
-							</form> 
-							<ul class="list">
-								<li><a href="#">Fgo psu dr sit amek </a></li>
-								<li><a href="#">Sem psum dr sit ametre </a></li>
-								<li><a href="#">Rame sum dr sit ame </a></li>
-								<li><a href="#">Bem psum dr sit ameteko </a></li>
-								<li><a href="#">Nem dsum dr sit amewas </a></li>
-								<li><a href="#">Vcem psum dr sit </a></li>
-								<li><a href="#">Zdfem psum dr sittr amewe </a></li>
-							</ul>
-			</div>
-	</div>
-	<div class="clear"></div></div>
+
+<div class="m1"><img src="images/sy_menus.jpg" width="1200" height="120" /></div>
+
+<div class="footer">
+	<ul>
+    	<li><a href="#">关于我们</a></li>
+        <li><a href="#">联系我们</a></li>
+        <li><a href="#">员工风采</a></li>
+        <li><a href="#">网站地图</a></li>
+        <li><a href="#">帮助中心</a></li>
+        <li><a href="#">友情链接</a></li>
+    </ul>
 </div>
-<div class="bottom_block">
-	<div class="container_12">
-		<div class="grid_2 prefix_2">
-			<ul>
-				<li><a href="#">FAQS Page</a></li>
-				<li><a href="#">People Say</a></li>
-			</ul>
-		</div>
-		<div class="grid_2">
-			<ul>
-				<li><a href="#">Useful links</a></li>
-				<li><a href="#">Partners</a></li>
-			</ul>
-		</div>
-		<div class="grid_2">
-			<ul>
-				<li><a href="#">Insurance</a></li>
-				<li><a href="#">Family Travel</a></li>
-			</ul>
-		</div>
-		<div class="grid_2">
-			<h4>Contact Us:</h4>
-			TEL: 1-800-234-5678<br><a href="#">info@demolink.org</a>
-		 
-		</div>
-		<div class="clear"></div>
-		</div>
-	</div>
-<!--==============================footer=================================-->
 
+<div class="foot">
+Traveler-旅行者国际旅行社有限公司 旅游经营许可证：J-BJ-01260<br/>
+北京旅行者旅游集团分公司 旅游经营许可证号：J-BJ-CJ00010 <br/>
+Copyright © 2016-2020 北京旅行者国际旅行社有限公司 版权所有　管理备案号：京ICP备10202078号-2<br/>
+旅游局投诉电话：<span>12301</span>&nbsp;&nbsp;技术支持：<a href="http://www.tours.com/">云畅网络</a>
+<ul>
+	<li><img src="images/copyright01.jpg" width="103" height="32" alt="经营性网站 备案信息" /></li>
+    <li><img src="images/copyright02.jpg" width="103" height="32" alt="可信网站 信用评价" /></li>
+    <li><img src="images/copyright03.jpg" width="103" height="32" alt="可信网站 信用评价" /></li>
+</ul>
 </div>
-<footer>		
-	<div class="container_12">
-	<div class="grid_12">
-		<div class="socials">
-			<a href="#"></a>
-			<a href="#"></a>
-			<a href="#"></a>
-			<a href="#"></a>
-		</div>
-			<div class="copy">
-		 Journey &copy; 2013 | <a href="#">Privacy Policy</a> | Website designed Collect from  <a href="http://www.cssmoban.com/" rel="">模板之家</a>
-		 </div></div>
-		 <div class="clear"></div>
-	</div>
-
-</footer>
-
 </body>
 </html>

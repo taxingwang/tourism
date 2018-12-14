@@ -1,64 +1,164 @@
-<!DOCTYPE html>
-<html lang="en" class="no-js">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta charset="UTF-8" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
-<meta name="viewport" content="width=device-width, initial-scale=1"> 
-<title>login</title>
-<base href="http://www.tours.com/">
-<link rel="stylesheet" type="text/css" href="css/normalize.css" />
-<link rel="stylesheet" type="text/css" href="css/demo.css" />
-<link rel="stylesheet" href="js/vendor/jgrowl/css/jquery.jgrowl.min.css">
-<!--必要样式-->
-<link rel="stylesheet" type="text/css" href="css/componentss.css" />
-<!--[if IE]>
-<script src="js/html5.js"></script>
-<![endif]-->
-<style>
-	input::-webkit-input-placeholder{
-		color:rgba(0, 0, 0, 0.726);
-	}
-	input::-moz-placeholder{   /* Mozilla Firefox 19+ */
-		color:rgba(0, 0, 0, 0.726);
-	}
-	input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
-		color:rgba(0, 0, 0, 0.726);
-	}
-	input:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
-		color:rgba(0, 0, 0, 0.726);
-	}
-</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="order by dede58.com/" />
+<title>Traveler-登录</title>
+<base href="http://www.tours.com">
+<meta content="Traveler" name="keywords" />
+<meta content="Traveler" name="description" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/lightbox.css" rel="stylesheet" type="text/css" />
+<link href="css/zhuce.css" rel="stylesheet" type="text/css" />
+<link href="css/login.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/lrtk.js"></script>
+<script type="text/javascript" src="js/lightbox.js"></script>
+<script type="text/javascript" src="js/jquery.superslide.2.1.1.js"></script>
 </head>
 <body>
-		<div class="container demo-1">
-			<div class="content">
-				<div id="large-header" class="large-header">
-					<canvas id="demo-canvas"></canvas>
-					<div class="logo_box">
-						<h3>用户登录</h3>
-						<form action="#" name="f" method="post">
-							<div class="input_outer">
-								<span class="u_user"></span>
-								<input id="ID" name="logname" class="text" style="color: #000000 !important" type="text" placeholder="请输入账户">
-							</div>
-							<div class="input_outer">
-								<span class="us_uer"></span>
-								<input id="PASSWORD" name="logpass" class="text" style="color: #000000 !important; position:absolute; z-index:100;"value="" type="password" placeholder="请输入密码">
-							</div>
-							<div id="LOGIN" class="mb2"><a class="act-but submit" href="javascript:void(0)" onclick="login()" style="color: #FFFFFF">登录</a></div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div><!-- /container -->
-		<script src="js/TweenLite.min.js"></script>
-		<script src="js/EasePack.min.js"></script>
-		<script src="js/jquery.js"></script>
-		<script src="js/rAF.js"></script>
-		<script src="js/demo-1.js"></script>
-		<script src="js/vendor/jgrowl/jquery.jgrowl.min.js"></script>
-		<script src="js/Longin.js"></script>
-		<div style="text-align:center;">
+<div class="header">
+	<div class="logo"><a href="#"><img src="images/logo.png" width="194" height="55" /></a></div>
+    <div class="logo01"><a href="#"><img src="images/logo_01.png" width="368" height="40" /></a></div>
+    <div class="logo02"><a href="#"><img src="images/logo_02.png" width="387" height="45" /></a></div>
 </div>
-	</body>
+
+<div class="login_banner" style="overflow:hidden;">
+      <div id="full-screen-slider">
+        <ul id="slides">
+           <li style="background:url(images/login_banner.jpg) no-repeat center top"><a href="#"></a></li>
+           <li style="background:url(images/login_banner1.jpg) no-repeat center top"><a></a></li>
+           <li style="background:url(images/login_banner2.jpg) no-repeat center top"><a></a></li>
+        </ul>
+      </div>
+      <script type="text/javascript" src="js/banner.index.js"></script>
+      
+      <div class="login_main">
+      	<div id="dlcon">
+              <ul id="dltags">
+                <li class="selectTag"> <a href="javascript:void(0)" onclick="selectTag('tagContent0',this)">用户登录</a></li>
+             </ul>
+             <div id="dltagContent">
+             <div style="display: block;" class="tagContent selectTag" id="tagContent0">
+             	<div id="denglu_l">
+                   <form action="login.php"  method="post" id="J_Form">
+                    <dl class="top_login">
+                        <dd><input type="image" class="login_image" src="images/denglu.jpg" /></dd>
+                        <dt><input type="text" placeholder="请输入用户名" id="msgCode" name="username" class="login_text"/><span id="username1"></span></dt>
+                    </dl>
+                    <dl class="top_login">
+                        <dd><input type="image" class="login_image" src="images/yaoshi.jpg" /></dd>
+                        <dt><input type="password" placeholder="请输入密码" id="mima1" name="password" class="login_text" /><span id="mima1show"></span></dt>
+                    </dl>
+                    <div class="login-links">
+                        <a href="#" class="forget-pwd" target="_blank">忘记密码？</a>
+                        <a href="{:url('login/register')}" class="register">还没有账号？免费<span>注册</span></a>
+                    </div>
+                    <div class="login-links">
+                        <a href="{:url('login/activation')}" class="register">有帐号未激活？去<span>激活</span></a>
+                    </div>
+                    <div class="ljdenglu">
+                         <input type='hidden' id="flag4" value='2' />
+                         <input class="ljdl login" id="submit1" name="commit" value="立即登录" type="button">
+                    </div>
+                    </form>
+			     </div>
+      </div>
+    </div>            
+  </div>
+</div>
+<script type="text/javascript">
+var check_username = false;
+$("#msgCode").blur(function() {
+$("#username1").empty()
+    var username = $("#msgCode").val()
+    var aa = /^[a-zA-Z][a-zA-Z0-9_]{4,10}$/;
+    if(username == null || username == "") {
+          var str = "<font color='red'>*用户名不能为空</font>"
+          $("#username1").append(str)
+          check_username = false;
+          return;
+    } else {
+          check_username = true;
+    }
+    if(!aa.test(username)) {
+          var str = "<font color='red'>*请输入正确格式的用户名</font>"
+          $("#username1").append(str)
+          check_username = false;
+          return;
+    } else {
+          check_email = true;
+    }
+})
+var check_password = false;
+$("#mima1").blur(function() {
+$("#mima1show").empty()
+    var password = $("#mima1").val()
+    var aa = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+    if(password == null || password == "") {
+          var str = "<font color='red'>*密码不能为空</font>"
+          $("#mima1show").append(str)
+          check_password = false;
+          return;
+    } else {
+          check_password = true;
+    }
+    if(!aa.test(password)) {
+          var str = "<font color='red'>*请输入正确格式的密码</font>"
+          $("#mima1show").append(str)
+          check_password = false;
+          return;
+    } else {
+          check_password = true;
+    }
+})
+          //登录
+          $('.login').click(function () {
+            if(check_username==true&&check_password==true){
+              var username = $('input[name=username]').val();
+               var password = $('input[name=password]').val();
+               data = {
+                   'username':username,
+                   'password':password,
+               };
+               $.ajax({
+                   type: "POST",
+                   url: "{:url('login/login_do')}",
+                   data: data,
+                   success: function(msg){
+                      if(msg==1){
+                       window.location.href = "{:url('Index/index')}";
+                      }else if(msg==2){
+                        alert("该账还未激活，前往激活")
+                        window.location.href = "{:url('Login/activation')}";
+                      }else if(msg==3){
+                        alert("账号与密码不匹配")
+                      }else{
+                        alert("账号不存在")
+                      }
+                   }
+               });
+            }else{
+              return false
+            }
+             
+          });
+				function selectTag(showContent,selfObj){
+					// 操作标签
+					var tag = document.getElementById("dltags").getElementsByTagName("li");
+					var taglength = tag.length;
+					for(i=0; i<taglength; i++){
+						tag[i].className = "";
+					}
+					selfObj.parentNode.className = "selectTag";
+					// 操作内容
+					for(i=0; j=document.getElementById("tagContent"+i); i++){
+						j.style.display = "none";
+					}
+					document.getElementById(showContent).style.display = "block";
+				}
+				</script>
+      </div>
+</div>
+</body>
 </html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<base href="http://www.tours.com/">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="author" content="order by dede58.com/" />
+<title>Traveler-注册</title>
+<meta content="Traveler" name="keywords" />
+<meta content="Traveler" name="description" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="css/lightbox.css" rel="stylesheet" type="text/css" />
+<link href="css/zhuce.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/jquery-1.8.2.min.js"></script>
+<script type="text/javascript" src="js/lrtk.js"></script>
+<script type="text/javascript" src="js/lightbox.js"></script>
+<script type="text/javascript" src="js/jquery.superslide.2.1.1.js"></script>
+</head>
+<body>
+<div class="top_box">
+  <div class="top_nav">
+    <div class="top_left"><font color="red">欢迎来到Traveler官方网站，我们竭诚为您服务！</font></div>
+    <div class="fx">
+    </div>
+    <div class="top_right">
+      <!-- <div class="phone"><a href="login.html">移动端</a></div> -->
+      <div class="login"><a href="{:Url('Login/login')}">登录</a></div>
+      <div class="regist">
+        <ul>
+          <li><a href="{:url('login/register')}">免费注册</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="header">
+	<div class="logo"><a href="javascript:void(0)"><img src="images/logo.png" width="194" height="55" /></a></div>
+	<div class="logo01"><a href="javascript:void(0)"><img src="images/logo_01.png" width="368" height="40" /></a></div>
+	<div class="logo02"><a href="javascript:void(0)"><img src="images/logo_02.png" width="387" height="45" /></a></div>
+</div>
+<div class="top_menus">
+<div class="menus">
+	<ul>
+		<li><a href="{:url('Index/index')}" title="首页">首页</a></li>
+		<li><a href="{:url('Order/order_list')}" title="我的订单">我的订单</a></li>
+		<li><a href="{:url('News/new_list')}" title="新闻动态">新闻动态</a></li>
+		<li><a href="{:url('Line/line')}" title="精选线路">精选线路</a></li>
+		<li><a href="{:url('Spot/spot')}" title="景点专列">景点专列</a></li>
+		<li><a href="{:url('Comment/comment')}" title="查看评论">查看评论</a></li>
+		<li><a href="{:url('Collection/my_collection')}" title="我的收藏">我的收藏</a></li>
+	</ul>
+</div>
+<form action="{:url('Line/search')}" method="post">
+        	<dl class="top_search">
+            	<dt><input type="text"placeholder="成百上千旅游路线，总有一款适合您！" name="title" class="input_text" /></dt>
+                <dd><input type="image" class="input_image" src="images/dd_bg.png" /></dd>
+            </dl>
+        </form>
+</div>
+<div class="main">
+<div class="zhuce_bt">
+      <div class="zhuce_catpos">当前位置：<a href="{:url('index/index')}" title="首页">首页</a> > <a href="{:url('login/register')}">用户注册</a></div>用户注册</div>
+<ul id="zctags">
+	<li class="selectTag"> <a href="javascript:void(0)" onclick="selectTag('tagContent0',this)">用户名注册</a></li>
+    <span>我已经注册，现在就<a href="{:url('login/login')}">登陆</a></span>
+</ul>
+<div class="theme_main">
+	<div id="zccon">
+		<div id="zctagContent">
+			<div style="display: block;" class="tagContent selectTag" id="tagContent0"> 　
+				<div id="zhuce_l">
+					<div class="mail">
+						<span class="text_font">用户名：</span>
+						<input type="text" value="" autocomplete="off" class="f-text" id="msgCode" name="username" placeholder="输入您的用户名">
+						<span id="username1"></span>
+					</div>
+					<div class="mail">
+						<span class="text_font">设置密码：</span>
+						<input type="password" value="" autocomplete="off" class="f-text" id="mima1"  name="password" placeholder="字母开头6~18位字母、数字和下划线"/>
+						<span id="mima1show"></span>
+					</div>
+					<div class="mail">
+						<span class="text_font">确认密码：</span>
+						<input type="password" value="" autocomplete="off" class="f-text" id="mima2" name="password2" placeholder="再次输入密码">
+							<span id="mima2show"></span>
+					</div>
+					<div class="mail">
+						<span class="text_font">*手机号：</span>
+						<input type="text" value="" autocomplete="off" class="f-text" id="phone" name="tel" placeholder="输入有效的手机号码">
+						<span id="tel1"></span>
+					</div>
+					<div class="mail">
+						<span class="text_font">*邮箱：</span>
+						<input type="text" autocomplete="off" class="f-text" id="email" name="email" placeholder="支持新浪/QQ/163邮箱">
+						<span id='email1' ></span>
+					</div>
+                    <div class="mail"> <span class="text_font">验证码：</span>
+						<div class="yzm">
+							<input id="login-yzm" class="f-yzm" name="very"
+								type="text" placeholder="填写右侧的验证码" onkeypress="enterPre()" onkeydown="enterPre()">
+                    		<img src="{:Url('Login/show_captcha')}" alt="" width="121" height="32" class="passcode" onclick="this.src=this.src+'?'" title="点击刷新"/> 
+							<span id="yzmtmp"></span>
+						</div>
+					</div>
+					<div class="agree">
+						<input value="1" checked="checked" name="remember_username"
+							id="checkB" class="f-check" type="checkbox">
+						<label class="normal" for="remember-username" id="check">同意“服务条款”和“隐私权相关政策”</label>
+					</div>
+					<div class="ljzcan">
+						<input type='hidden' id="flag1" value='2' />
+						<input type='hidden' id="flag2" value='2' />
+						<input type='hidden' id="flag3" value='2' />
+						<input class="ljzc zc" name="commit" value="提交注册" type="button" >
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<script type="text/javascript">
+//正则验证用户名
+var check_username = false;
+$("#msgCode").blur(function() {
+	$("#username1").empty()
+	var username = $("#msgCode").val()
+	var aa = /^[a-zA-Z][a-zA-Z0-9_]{4,10}$/;
+	if(username == null || username == "") {
+		var str = "<font color='red'>*用户名不能为空</font>"
+		$("#username1").append(str)
+		check_username = false;
+		return;
+	} else {
+		check_username = true;
+	}
+	if(!aa.test(username)) {
+		var str = "<font color='red'>*字母开头4-10位字母数字下划线</font>"
+		$("#username1").append(str)
+		check_username = false;
+		return;
+	} else {
+		var str = "<font color='green'>✔</font>"
+		$("#username1").append(str)
+		check_username = true;
+	}
+})
+//正则验证密码
+var check_password = false;
+$("#mima1").blur(function() {
+	$("#mima1show").empty()
+	var password = $("#mima1").val()
+	var aa = /^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+	if(password == null || password == "") {
+		var str = "<font color='red'>*密码不能为空</font>"
+		$("#mima1show").append(str)
+		check_password = false;
+		return;
+	} else {
+		check_password = true;
+	}
+	if(!aa.test(password)) {
+		var str = "<font color='red'>*字母开头6~18位字母、数字和下划线</font>"
+		$("#mima1show").append(str)
+		check_password = false;
+		return;
+	} else {
+		var str = "<font color='green'>✔</font>"
+		$("#mima1show").append(str)
+		check_password = true;
+	}
+})
+var check_pwd = false;
+$("#mima2").blur(function() {
+	$("#mima2show").empty()
+	var password = $("#mima1").val()
+	var pwd = $("#mima2").val()
+	if(pwd == null || pwd == "") {
+		var str = "<font color='red'>*请再次输入密码</font>"
+		$("#mima2show").append(str)
+		check_pwd = false;
+		return;
+	} else {
+		check_pwd = true;
+	}
+	if(pwd!=password) {
+		var str = "<font color='red'>*两次密码不一致</font>"
+		$("#mima2show").append(str)
+		check_pwd = false;
+		return;
+	} else {
+		var str = "<font color='green'>✔</font>"
+		$("#mima2show").append(str)
+		check_pwd = true;
+	}
+})
+//正则验证电子邮箱
+var check_email = false;
+$("#email").blur(function() {
+	$("#email1").empty()
+	var email = $("#email").val()
+	var aa = /^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$/;
+	if(email == null || email == "") {
+		var str = "<font color='red'>*不能为空</font>"
+		$("#email1").append(str)
+		check_email = false;
+		return;
+	} else {
+		check_email = true;
+	}
+	if(!aa.test(email)) {
+		var str = "<font color='red'>*请输入正确的邮箱</font>"
+		$("#email1").append(str)
+		check_email = false;
+		return;
+	} else {
+		var str = "<font color='green'>✔</font>"
+		$("#email1").append(str)
+		check_email = true;
+	}
+})
+//正则验证手机号
+var check_tel = false;
+$("#phone").blur(function() {
+	// alert(123)
+	$("#tel1").empty()
+	var tel = $("#phone").val()
+	var aa = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+	if(tel == null || tel == "") {
+		var str = "<font color='red'>*不能为空</font>"
+		$("#tel1").append(str)
+		check_tel = false;
+		return;
+	} else {
+		check_tel = true;
+	}
+	if(!aa.test(tel)) {
+		var str = "<font color='red'>*请输入正确的手机号</font>"
+		$("#tel1").append(str)
+		check_tel = false;
+		return;
+	} else {
+		var str = "<font color='green'>✔</font>"
+		$("#tel1").append(str)
+		check_tel = true;
+	}
+})
+//验证码验证
+var check_cptcha = false;
+$("#login-yzm").blur(function(){
+	$("#yzmtmp").empty()
+	var code = $(this).val()
+	$.ajax({
+		data:{"code":code},
+		type:"post",
+		url:"{:Url('Login/cptcha_check')}",
+		success:function(msg){
+			if(msg==1){
+				var str = "<font color='green'>✔</font>"
+				$("#yzmtmp").append(str)
+				check_cptcha = true;
+				return;
+			}else{
+				var str = "<font color='red'>*验证码有误</font>"
+				$("#yzmtmp").append(str)
+				check_cptcha = false;
+				return;
+			}
+		}
+	})
+})
+$('.zc').click(function () {
+	if(check_username==true&&check_password==true&&check_pwd==true&&check_tel==true&&check_email==true&&check_cptcha==true){
+		var obj = $("#checkB")
+			if(obj.is(":checked")){
+				var username = $("#msgCode").val()
+				var password = $("#mima1").val()
+				var tel = $("#phone").val()
+				var email = $("#email").val()
+                    data = {
+                        'username':username,
+                        'password':password,
+                        'tel':tel,
+                        'email':email
+                    };
+                    $.ajax({
+                        type: "POST",
+                        url: "{:url('login/registers')}",
+                        data: data,
+                        success: function(msg){
+							if(msg == 0){
+							    alert('该用户名已存在')
+							}else if(msg == 1){
+							    alert('注册成功');
+                                window.location.href = "{:url('login/activation')}";
+							}else{
+							    alert('出错了');
+							}
+                        }
+                    });
+			}else{
+				alert("您还未同意“服务条款”和“隐私权相关政策”")
+			}
+	}else{
+		return false;
+	}
+})
+
+	//点击看不清舒刷新验证码
+$('.kbq').click(function () {
+    var ts = Date.parse(new Date())/1000;
+    $('#verify_img').attr("src", "/captcha?id="+ts);
+});
+function selectTag(showContent,selfObj){
+	// 操作标签
+	var tag = document.getElementById("zctags").getElementsByTagName("li");
+	var taglength = tag.length;
+	for(i=0; i<taglength; i++){
+		tag[i].className = "";
+	}
+	selfObj.parentNode.className = "selectTag";
+	// 操作内容
+	for(i=0; j=document.getElementById("tagContent"+i); i++){
+		j.style.display = "none";
+	}
+	document.getElementById(showContent).style.display = "block";
+}
+</script>	
+    <div id="zhuce_r"><img src="images/zhuce.jpg" /></div>
+</div>
+</div>
+</body>
+</html>
